@@ -1,0 +1,16 @@
+{
+  "name": "@waynevanson/stream",
+  "version": "0.0.0",
+  "type": "module",
+  "author": {
+    "email": "waynevanson@gmail.com",
+    "name": "Wayne Van Son",
+    "url": "https://github.com/waynevanson"
+  },
+  "exports": {
+    "web": {
+      "default": "./dist/web/index.js",
+      "types": "./dist/web/index.d.ts"
+    }
+  }
+}
