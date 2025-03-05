@@ -1,1 +1,7 @@
-{}
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "composite": true
+  }
+}

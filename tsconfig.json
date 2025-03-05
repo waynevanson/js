@@ -1,4 +1,10 @@
 {
   "files": [],
-  "references": [{ "path": "packages/stream" }]
+  "references": [
+    { "path": "packages/stream" },
+    { "path": "packages/compose/solid" }
+  ],
+  "compilerOptions": {
+    "target": "ESNext"
+  }
 }

@@ -1,1 +1,7 @@
-{"devDependencies":{"typescript":"^5.8.2","vitest":"^3.0.7"}}
+{
+  "devDependencies": {
+    "release-it": "^18.1.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}
