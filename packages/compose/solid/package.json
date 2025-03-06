@@ -1,6 +1,22 @@
 {
   "name": "@waynevanson/compose-solid",
+  "type": "module",
+  "exports": {
+    ".": {
+      "solid": "./dist/source/index.jsx",
+      "node": "./dist/esm/index.js",
+      "browser": "./dist/esm/index.js",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/esm/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build"
+  },
   "devDependencies": {
-    "solid-js": "^1.9.5"
+    "rollup-preset-solid": "^3.0.0",
+    "solid-js": "^1.9.5",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
   }
 }

@@ -1,18 +1,12 @@
-import { splitProps } from "solid-js"
-import {
-  TagKind,
-  PolymorphicComponent,
-  PolymorphicComponentProps,
-} from "./types"
+import { JSX, splitProps } from "solid-js"
+import { TagKind, ComposedComponent } from "./types"
 
 export function tag<Tag extends TagKind>(
   tag: Tag
-): PolymorphicComponent<Tag, {}> {
-  return function PolymorphicTagComponent<As extends TagKind = Tag>(
-    props: PolymorphicComponentProps<As, {}>
-  ) {
+): ComposedComponent<Tag, JSX.IntrinsicElements[Tag]> {
+  return function PolymorphicTagComponent(props) {
     const [, rest] = splitProps(props, ["as"])
-    //@ts-ignore
+    //@ts-expect-error
     return createDynamic(() => props.as || tag, rest)
   }
 }
