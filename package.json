@@ -1,12 +1,14 @@
 {
   "packageManager": "pnpm@10.6.0",
+  "scripts": {},
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
+    "@release-it/conventional-changelog": "^10.0.0",
     "@types/node": "22",
     "lerna": "^8.2.1",
-    "nx": "^20.5.0",
+    "nx": "20.5.0",
     "release-it": "^18.1.2",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
