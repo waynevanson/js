@@ -6,7 +6,7 @@
   ],
   "devDependencies": {
     "@release-it/conventional-changelog": "^10.0.0",
-    "@types/node": "22",
+    "@types/node": "^22.13.9",
     "lerna": "^8.2.1",
     "nx": "20.5.0",
     "release-it": "^18.1.2",
