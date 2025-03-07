@@ -253,3 +253,20 @@
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:21:41.360Z - Done responding to the client handleContextFileData
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:21:41.360Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:21:44.583Z - Closed a connection. Number of open connections: 0
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.525Z - Established a connection. Number of open connections: 1
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.526Z - Closed a connection. Number of open connections: 0
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.526Z - Established a connection. Number of open connections: 1
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.527Z - [REQUEST]: Client Request for Project Graph Received
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.527Z - [REQUEST]: Responding to the client. project-graph
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.527Z - Time taken for 'total for creating and serializing project graph' 0.14290700003039092ms
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.528Z - Done responding to the client project-graph
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.528Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 0. Response time: 1.
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.531Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.531Z - Done responding to the client handleContextFileData
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:01.531Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 0. Response time: 0.
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:04.826Z - Closed a connection. Number of open connections: 0
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.180Z - [WATCHER]: .gitignore was modified
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.181Z - [WATCHER]: Processing file changes in outputs
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.181Z - [WATCHER]: Stopping the watcher for /home/waynevanson/code/waynevanson/js (sources)
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.181Z - [WATCHER]: Stopping the watcher for /home/waynevanson/code/waynevanson/js (outputs)
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.184Z - Server stopped because: "Stopping the daemon the set of ignored files changed (native)"
