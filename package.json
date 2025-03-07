@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "build": "turbo build"
+    "build": "turbo build",
+    "release": "turbo release"
   },
   "packageManager": "pnpm@10.6.0",
   "devDependencies": {
+    "@types/node": "^22",
     "release-it": "^18.1.2",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2",

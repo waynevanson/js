@@ -8,8 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/index.tsx",
-      formats: ["es", "cjs"],
-      fileName: resolveFileName,
+      formats: ["es"],
+      fileName: () => "index.mjs",
       name: "index",
     },
     rollupOptions: {
@@ -27,21 +27,3 @@ export default defineConfig({
     }),
   ],
 })
-
-function resolveFileName(moduleFormat, entryName) {
-  let extension = ""
-  switch (moduleFormat) {
-    case "es":
-      extension = "mjs"
-      break
-    case "cjs":
-      extension = "cjs"
-      break
-    default:
-      throw new Error(
-        `Expected to moduleFormat to be es or cjs, received ${moduleFormat}`
-      )
-  }
-
-  return `${entryName}.${extension}`
-}
