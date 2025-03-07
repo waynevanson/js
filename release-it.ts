@@ -25,6 +25,9 @@ export default {
     release: true,
     releaseName: full,
   },
+  npm: {
+    publish: false,
+  },
   plugins: {
     "@release-it/conventional-changelog": {
       preset: {
