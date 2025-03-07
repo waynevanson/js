@@ -1,0 +1,186 @@
+{
+  "packages/compose-solid": {
+    "root": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "name": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "tags": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.0": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.description": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageMain": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.executor": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options.script": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.scriptContent": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.runCommand": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "packages/compose-solid/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.outputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.parallelism": [
+      "nx.json",
+      "nx/target-defaults"
+    ]
+  },
+  "packages/stream": {
+    "root": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "name": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "tags": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.description": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageMain": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "targets": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "packages/stream/package.json",
+      "nx/core/package-json"
+    ]
+  }
+}
