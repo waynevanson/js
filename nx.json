@@ -6,6 +6,7 @@
       "outputs": ["{projectRoot}/dist"]
     },
     "release": {
+      "cache": false,
       "dependsOn": ["^build"]
     }
   }

@@ -16,6 +16,7 @@ export default {
   git: {
     commitMessage: `[skip ci] Release ${full}`,
     tagAnnotation: full,
+    tagName: full,
   },
   github: {
     release: true,
