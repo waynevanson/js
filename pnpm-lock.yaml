@@ -11,6 +11,9 @@ importers:
       release-it:
         specifier: ^18.1.2
         version: 18.1.2(@types/node@22.13.9)(typescript@5.8.2)
+      turbo:
+        specifier: ^2.4.4
+        version: 2.4.4
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -20,12 +23,9 @@ importers:
 
   packages/compose/solid:
     devDependencies:
-      immer:
-        specifier: ^10.1.1
-        version: 10.1.1
-      rollup-plugin-peer-deps-external:
-        specifier: ^2.2.4
-        version: 2.2.4(rollup@4.34.9)
+      '@waynevanson/rollup-plugin-externals':
+        specifier: workspace:../../rollup/plugin/externals
+        version: link:../../rollup/plugin/externals
       rollup-preset-solid:
         specifier: ^3.0.0
         version: 3.0.0(@types/babel__core@7.20.5)
@@ -47,15 +47,24 @@ importers:
 
   packages/rollup/plugin/externals:
     devDependencies:
+      '@rollup/plugin-typescript':
+        specifier: ^12.1.2
+        version: 12.1.2(rollup@4.34.9)(tslib@2.8.1)(typescript@5.8.2)
       '@types/node':
-        specifier: ^20
-        version: 20.17.23
+        specifier: ^22
+        version: 22.13.9
       rollup:
         specifier: ^4.34.9
         version: 4.34.9
+      rollup-plugin-dts:
+        specifier: ^6.1.1
+        version: 6.1.1(rollup@4.34.9)(typescript@5.8.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
+      vite:
+        specifier: ^6.2.0
+        version: 6.2.0(@types/node@22.13.9)(terser@5.39.0)
 
   packages/stream: {}
 
@@ -993,6 +1002,19 @@ packages:
       rollup:
         optional: true
 
+  '@rollup/plugin-typescript@12.1.2':
+    resolution: {integrity: sha512-cdtSp154H5sv637uMr1a8OTWB0L1SWDSm1rDGiyfcGcvQ6cuTs4MDk2BVEBGysUWago4OJN4EQZqOTl/QY3Jgg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0||^4.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+
   '@rollup/pluginutils@5.1.4':
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
     engines: {node: '>=14.0.0'}
@@ -1150,9 +1172,6 @@ packages:
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
-
-  '@types/node@20.17.23':
-    resolution: {integrity: sha512-8PCGZ1ZJbEZuYNTMqywO+Sj4vSKjSjT6Ua+6RFOYlEvIvKQABPtrNkoVSLSKDb4obYcMhspVKmsw8Cm10NFRUg==}
 
   '@types/node@22.13.9':
     resolution: {integrity: sha512-acBjXdRJ3A6Pb3tqnw9HZmyR3Fiol3aGxRCK1x3d+6CDAMjl7I649wpSd+yNURCjbOUGu9tqtLKnTGxmK6CyGw==}
@@ -1746,9 +1765,6 @@ packages:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  immer@10.1.1:
-    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
-
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
@@ -2285,10 +2301,12 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rollup-plugin-peer-deps-external@2.2.4:
-    resolution: {integrity: sha512-AWdukIM1+k5JDdAqV/Cxd+nejvno2FVLVeZ74NKggm3Q5s9cbbcOgUPGdbxPi4BXu7xGaZ8HG12F+thImYu/0g==}
+  rollup-plugin-dts@6.1.1:
+    resolution: {integrity: sha512-aSHRcJ6KG2IHIioYlvAOcEq6U99sVtqDDKVhnwt70rW6tsz3tv5OSjEiWcgzfsHdLyGXZ/3b/7b/+Za3Y6r1XA==}
+    engines: {node: '>=16'}
     peerDependencies:
-      rollup: '*'
+      rollup: ^3.29.4 || ^4
+      typescript: ^4.5 || ^5.0
 
   rollup-preset-solid@3.0.0:
     resolution: {integrity: sha512-+LxZ9k+OzG8ufWZUaH9wagokAn4YgW0jWM76Cnq09Mej1eP/sTi1FzVt1WeaCDonyaOPRczop3LyZ4Rpzp+C9w==}
@@ -2415,6 +2433,9 @@ packages:
   std-env@3.8.0:
     resolution: {integrity: sha512-Bc3YwwCB+OzldMxOXJIIvC6cPRWr/LxOp48CdQTOkPyk/t4JWWJbrilwBd7RJzKV8QW7tJkcgAmeuLLJugl5/w==}
 
+  std-env@3.8.1:
+    resolution: {integrity: sha512-vj5lIj3Mwf9D79hBkltk5qmkFI+biIKWS2IBxEyEU3AX1tUf7AoL8nSazCOiiqQsGKIq01SClsKEzweu34uwvA==}
+
   stdin-discarder@0.2.2:
     resolution: {integrity: sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==}
     engines: {node: '>=18'}
@@ -2500,6 +2521,40 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
+  turbo-darwin-64@2.4.4:
+    resolution: {integrity: sha512-5kPvRkLAfmWI0MH96D+/THnDMGXlFNmjeqNRj5grLKiry+M9pKj3pRuScddAXPdlxjO5Ptz06UNaOQrrYGTx1g==}
+    cpu: [x64]
+    os: [darwin]
+
+  turbo-darwin-arm64@2.4.4:
+    resolution: {integrity: sha512-/gtHPqbGQXDFhrmy+Q/MFW2HUTUlThJ97WLLSe4bxkDrKHecDYhAjbZ4rN3MM93RV9STQb3Tqy4pZBtsd4DfCw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  turbo-linux-64@2.4.4:
+    resolution: {integrity: sha512-SR0gri4k0bda56hw5u9VgDXLKb1Q+jrw4lM7WAhnNdXvVoep4d6LmnzgMHQQR12Wxl3KyWPbkz9d1whL6NTm2Q==}
+    cpu: [x64]
+    os: [linux]
+
+  turbo-linux-arm64@2.4.4:
+    resolution: {integrity: sha512-COXXwzRd3vslQIfJhXUklgEqlwq35uFUZ7hnN+AUyXx7hUOLIiD5NblL+ETrHnhY4TzWszrbwUMfe2BYWtaPQg==}
+    cpu: [arm64]
+    os: [linux]
+
+  turbo-windows-64@2.4.4:
+    resolution: {integrity: sha512-PV9rYNouGz4Ff3fd6sIfQy5L7HT9a4fcZoEv8PKRavU9O75G7PoDtm8scpHU10QnK0QQNLbE9qNxOAeRvF0fJg==}
+    cpu: [x64]
+    os: [win32]
+
+  turbo-windows-arm64@2.4.4:
+    resolution: {integrity: sha512-403sqp9t5sx6YGEC32IfZTVWkRAixOQomGYB8kEc6ZD+//LirSxzeCHCnM8EmSXw7l57U1G+Fb0kxgTcKPU/Lg==}
+    cpu: [arm64]
+    os: [win32]
+
+  turbo@2.4.4:
+    resolution: {integrity: sha512-N9FDOVaY3yz0YCOhYIgOGYad7+m2ptvinXygw27WPLQvcZDl3+0Sa77KGVlLSiuPDChOUEnTKE9VJwLSi9BPGQ==}
+    hasBin: true
+
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
@@ -2508,8 +2563,8 @@ packages:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
 
-  type-fest@4.36.0:
-    resolution: {integrity: sha512-3T/PUdKTCnkUmhQU6FFJEHsLwadsRegktX3TNHk+2JJB9HlA8gp1/VXblXVDI93kSnXF2rdPx0GMbHtJIV2LPg==}
+  type-fest@4.37.0:
+    resolution: {integrity: sha512-S/5/0kFftkq27FPNye0XM1e2NsnoD/3FS+pBmbjmmtLT6I+i344KoOf7pvXreaFsDamWeaJX55nczA1m5PsBDg==}
     engines: {node: '>=16'}
 
   typescript@5.7.3:
@@ -2524,9 +2579,6 @@ packages:
 
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
-
-  undici-types@6.19.8:
-    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
@@ -3826,6 +3878,15 @@ snapshots:
     optionalDependencies:
       rollup: 4.34.9
 
+  '@rollup/plugin-typescript@12.1.2(rollup@4.34.9)(tslib@2.8.1)(typescript@5.8.2)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@4.34.9)
+      resolve: 1.22.10
+      typescript: 5.8.2
+    optionalDependencies:
+      rollup: 4.34.9
+      tslib: 2.8.1
+
   '@rollup/pluginutils@5.1.4(rollup@4.34.9)':
     dependencies:
       '@types/estree': 1.0.6
@@ -3957,10 +4018,6 @@ snapshots:
       '@babel/types': 7.26.9
 
   '@types/estree@1.0.6': {}
-
-  '@types/node@20.17.23':
-    dependencies:
-      undici-types: 6.19.8
 
   '@types/node@22.13.9':
     dependencies:
@@ -4214,7 +4271,7 @@ snapshots:
       chalk: 5.4.1
       cli-boxes: 3.0.0
       string-width: 7.2.0
-      type-fest: 4.36.0
+      type-fest: 4.37.0
       widest-line: 5.0.0
       wrap-ansi: 9.0.0
 
@@ -4362,7 +4419,7 @@ snapshots:
 
   dot-prop@9.0.0:
     dependencies:
-      type-fest: 4.36.0
+      type-fest: 4.37.0
 
   electron-to-chromium@1.5.112: {}
 
@@ -4599,8 +4656,6 @@ snapshots:
       safer-buffer: 2.1.2
 
   ignore@5.3.2: {}
-
-  immer@10.1.1: {}
 
   import-fresh@3.3.1:
     dependencies:
@@ -5122,9 +5177,13 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  rollup-plugin-peer-deps-external@2.2.4(rollup@4.34.9):
+  rollup-plugin-dts@6.1.1(rollup@4.34.9)(typescript@5.8.2):
     dependencies:
+      magic-string: 0.30.17
       rollup: 4.34.9
+      typescript: 5.8.2
+    optionalDependencies:
+      '@babel/code-frame': 7.26.2
 
   rollup-preset-solid@3.0.0(@types/babel__core@7.20.5):
     dependencies:
@@ -5269,6 +5328,8 @@ snapshots:
 
   std-env@3.8.0: {}
 
+  std-env@3.8.1: {}
+
   stdin-discarder@0.2.2: {}
 
   string-argv@0.3.2: {}
@@ -5336,19 +5397,44 @@ snapshots:
 
   tslib@2.8.1: {}
 
+  turbo-darwin-64@2.4.4:
+    optional: true
+
+  turbo-darwin-arm64@2.4.4:
+    optional: true
+
+  turbo-linux-64@2.4.4:
+    optional: true
+
+  turbo-linux-arm64@2.4.4:
+    optional: true
+
+  turbo-windows-64@2.4.4:
+    optional: true
+
+  turbo-windows-arm64@2.4.4:
+    optional: true
+
+  turbo@2.4.4:
+    optionalDependencies:
+      turbo-darwin-64: 2.4.4
+      turbo-darwin-arm64: 2.4.4
+      turbo-linux-64: 2.4.4
+      turbo-linux-arm64: 2.4.4
+      turbo-windows-64: 2.4.4
+      turbo-windows-arm64: 2.4.4
+
   type-fest@0.21.3: {}
 
   type-fest@2.19.0: {}
 
-  type-fest@4.36.0: {}
+  type-fest@4.37.0: {}
 
   typescript@5.7.3: {}
 
   typescript@5.8.2: {}
 
   ufo@1.5.4: {}
-
-  undici-types@6.19.8: {}
 
   undici-types@6.20.0: {}
 
@@ -5540,7 +5626,7 @@ snapshots:
       expect-type: 1.2.0
       magic-string: 0.30.17
       pathe: 2.0.3
-      std-env: 3.8.0
+      std-env: 3.8.1
       tinybench: 2.9.0
       tinyexec: 0.3.2
       tinypool: 1.0.2

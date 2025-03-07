@@ -1,59 +1,32 @@
 //@ts-check
-import { defineConfig } from "vite"
+import { defineConfig, mergeConfig } from "vite"
 import solid from "vite-plugin-solid"
-import { produce } from "immer"
-import * as fs from "node:fs"
-import * as path from "node:path"
-import externalise from "rollup-plugin-peer-deps-external"
+import { externals } from "@waynevanson/rollup-plugin-externals"
 import dts from "vite-plugin-dts"
 
 export default defineConfig({
-  plugins: [solid({}), solidify(), dts({ insertTypesEntry: true })],
-})
-
-/**
- * @returns {import("vite").Plugin}
- */
-export function solidify() {
-  return {
-    name: "solid-library",
-    config(config, env) {
-      const json = readPackageJson(config.root)
-
-      const external = [
-        ...Object.keys(json.peerDependencies ?? {}),
-        ...Object.keys(json.optionalDependencies ?? {}),
-        ...Object.keys(json.dependencies ?? {}),
-        ...Object.keys(json.devDependencies ?? {}),
-        "solid-js",
-        "solid-js/store",
-        "solid-js/web",
-      ]
-
-      return {
-        build: {
-          lib: {
-            entry: "src/index.tsx",
-            formats: ["es", "cjs"],
-            fileName: resolveFileName,
-          },
-          rollupOptions: {
-            external,
-          },
-          minify: false,
-        },
-      }
+  build: {
+    lib: {
+      entry: "src/index.tsx",
+      formats: ["es", "cjs"],
+      fileName: resolveFileName,
+      name: "index",
     },
-  }
-}
-
-function readPackageJson(root) {
-  return JSON.parse(
-    fs.readFileSync(path.resolve(root ?? process.cwd(), "package.json"), {
-      encoding: "utf8",
-    })
-  )
-}
+    rollupOptions: {
+      external: ["solid-js", "solid-js/store", "solid-js/web"],
+    },
+    minify: false,
+  },
+  plugins: [
+    solid(),
+    dts({ insertTypesEntry: true }),
+    externals({
+      devDependencies: true,
+      optionalDependencies: true,
+      peerDependencies: true,
+    }),
+  ],
+})
 
 function resolveFileName(moduleFormat, entryName) {
   let extension = ""

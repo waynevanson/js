@@ -1,3 +1,4 @@
 packages:
+  - "packages/rollup/plugin/externals"
   - "packages/stream"
-  - "packages/compose/*"
+  - "packages/compose/solid"

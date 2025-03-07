@@ -1,4 +1,4 @@
-import { Plugin } from "rollup"
+import type { Plugin } from "vite"
 import * as fs from "node:fs"
 import * as path from "node:path"
 
@@ -12,13 +12,14 @@ export interface ExternalsPluginOptions {
 
 export function externals(options?: ExternalsPluginOptions): Plugin {
   const config = createConfig(options)
-
   return {
     name: "@waynevanson/rollup-plugin-externals",
-    options() {
+    apply: "build",
+    config() {
       const json = findClosestPackageJson()
       const external = createExternal(config, json)
-      return { external }
+
+      return { optimizeDeps: { exclude: external } }
     },
   }
 }
