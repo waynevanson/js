@@ -1,7 +1,7 @@
 //@ts-check
 import { defineConfig, mergeConfig } from "vite"
 import solid from "vite-plugin-solid"
-import { externals } from "@waynevanson/rollup-plugin-externals"
+import { externals } from "@waynevanson/vite-plugin-externals"
 import dts from "vite-plugin-dts"
 
 export default defineConfig({
