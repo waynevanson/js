@@ -13,6 +13,8 @@ const [scope, name] = process.env["npm_package_name"]!.split("/")
 const version = "${version}"
 const full = `${scope}/${name}@${version}`
 
+const dir = process.cwd()
+
 export default {
   git: {
     commitMessage: `[skip ci] Release ${full}`,
@@ -32,6 +34,7 @@ export default {
         name: "angular",
       },
       infile: "CHANGELOG.md",
+      commitsOpts: dir,
     },
   },
 } satisfies Config
