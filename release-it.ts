@@ -9,9 +9,9 @@ import { Config } from "release-it"
 // setup ci
 // todo: only run version control
 
-const [scope, name] = process.env["npm_package_name"]!.split("/")
+const packageName = process.env["npm_package_name"]!.split("/")
 const version = "${version}"
-const full = `${scope}/${name}@${version}`
+const full = `${packageName}@${version}`
 
 const dir = process.cwd()
 
