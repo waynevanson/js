@@ -34,7 +34,7 @@ export default {
         name: "angular",
       },
       infile: "CHANGELOG.md",
-      commitsOpts: dir,
+      commitsOpts: { path: dir },
     },
   },
 } satisfies Config
