@@ -21,6 +21,7 @@ export default {
   },
   github: {
     release: true,
+    releaseName: full,
   },
   npm: {
     publish: true,
