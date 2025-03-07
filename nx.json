@@ -7,7 +7,7 @@
       "cache": true
     },
     "release": {
-      "dependsOn": ["^release"]
+      "dependsOn": ["^build", "^release"]
     }
   }
 }
