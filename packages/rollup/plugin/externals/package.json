@@ -1,0 +1,27 @@
+{
+  "name": "@waynevanson/rollup-plugin-externals",
+  "version": "1.0.0",
+  "description": "Externalise dependencies from package.json",
+  "author": "Wayne Van Son",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "rollup": "^4.34.9",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "rollup": "^4.34.9"
+  }
+}

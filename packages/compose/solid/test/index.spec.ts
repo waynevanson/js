@@ -1,4 +1,4 @@
-import { tag, optionals } from "../src/index"
+import { tag, optionals } from "../src/index.jsx"
 import { describe, test, expect, expectTypeOf } from "vitest"
 import { Component, JSX } from "solid-js"
 

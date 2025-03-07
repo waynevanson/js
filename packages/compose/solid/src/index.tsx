@@ -1,3 +1,3 @@
-export * from "./contramap"
-export * from "./tag"
-export * from "./types"
+export * from "./contramap.js"
+export * from "./tag.js"
+export * from "./types.js"

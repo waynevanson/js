@@ -7,16 +7,21 @@
       "node": "./dist/esm/index.js",
       "browser": "./dist/esm/index.js",
       "import": "./dist/esm/index.js",
-      "require": "./dist/esm/index.js"
+      "require": "./dist/esm/index.js",
+      "types": "dist/types/index.d.ts"
     }
   },
   "scripts": {
     "build": "vite build"
   },
   "devDependencies": {
+    "immer": "^10.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-preset-solid": "^3.0.0",
     "solid-js": "^1.9.5",
     "vite": "^6.2.0",
+    "vite-plugin-dts": "^4.5.3",
+    "vite-plugin-solid": "^2.11.6",
     "vitest": "^3.0.7"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "declaration": true,
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "isolatedDeclarations": true,
+    "isolatedModules": true
+  },
+  "include": ["src"]
+}

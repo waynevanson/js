@@ -1,8 +1,7 @@
 {
-  "compilerOptions": {
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "composite": true,
-    "strict": true
-  }
+  "files": [],
+  "references": [
+    { "path": "tsconfig.build.json" },
+    { "path": "tsconfig.test.json" }
+  ]
 }

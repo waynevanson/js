@@ -1,5 +1,5 @@
 import { createMemo, createComponent } from "solid-js"
-import {
+import type {
   OuterPropsKind,
   ComposedComponent,
   TagKind,
@@ -8,7 +8,7 @@ import {
   ComposedMonomorphicProps,
   ComposedPolymorphicProps,
   ComposedPolymorphicComponent,
-} from "./types"
+} from "./types.js"
 
 export function contramap<
   Tag extends TagKind,

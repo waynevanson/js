@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "composite": true,
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "strict": true
+  }
+}
