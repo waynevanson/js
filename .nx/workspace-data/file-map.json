@@ -10,56 +10,56 @@
         "hash": "9190662876843793678"
       },
       {
-        "file": "flake.lock",
-        "hash": "15302643498959836327"
+        "file": "tsconfig.json",
+        "hash": "4710949356356954321"
       },
       {
         "file": "pnpm-workspace.yaml",
         "hash": "15068071380531678201"
       },
       {
-        "file": ".vscode/settings.json",
-        "hash": "12461145776256189186"
-      },
-      {
-        "file": "nx.json",
-        "hash": "9490118356636906026"
-      },
-      {
-        "file": "tsconfig.json",
-        "hash": "9319430282556658674"
-      },
-      {
-        "file": "lerna.json",
-        "hash": "7528795118407830193"
-      },
-      {
-        "file": "turbo.json",
-        "hash": "11654491805527678309"
-      },
-      {
-        "file": "flake.nix",
-        "hash": "336070636692515936"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "9616941584499875664"
-      },
-      {
         "file": ".config/release-it.js",
         "hash": "3244421341483603138"
-      },
-      {
-        "file": "package.json",
-        "hash": "14609236072395946122"
       },
       {
         "file": ".envrc",
         "hash": "10462715152909053128"
       },
       {
+        "file": ".vscode/settings.json",
+        "hash": "12461145776256189186"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "1140104347393725228"
+      },
+      {
         "file": "CONTRIBUTING.md",
         "hash": "1409950022019071541"
+      },
+      {
+        "file": "turbo.json",
+        "hash": "11654491805527678309"
+      },
+      {
+        "file": "package.json",
+        "hash": "14609236072395946122"
+      },
+      {
+        "file": "flake.lock",
+        "hash": "15302643498959836327"
+      },
+      {
+        "file": "flake.nix",
+        "hash": "336070636692515936"
+      },
+      {
+        "file": "lerna.json",
+        "hash": "7528795118407830193"
+      },
+      {
+        "file": "nx.json",
+        "hash": "9490118356636906026"
       }
     ],
     "projectFileMap": {
@@ -137,6 +137,36 @@
         {
           "file": "packages/stream/tsconfig.json",
           "hash": "12107796785544675909"
+        }
+      ],
+      "@waynevanson/rollup-plugin-externals": [
+        {
+          "file": "packages/vite-plugin-externals/.gitignore",
+          "hash": "12194174342500491447"
+        },
+        {
+          "file": "packages/vite-plugin-externals/package.json",
+          "hash": "5764480174166155015",
+          "deps": [
+            "npm:vite",
+            "npm:@rollup/plugin-typescript",
+            "npm:@types/node",
+            "npm:rollup",
+            "npm:rollup-plugin-dts",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-externals/rollup.config.js",
+          "hash": "13119005524874832773"
+        },
+        {
+          "file": "packages/vite-plugin-externals/src/index.ts",
+          "hash": "13901345805333550662"
+        },
+        {
+          "file": "packages/vite-plugin-externals/tsconfig.json",
+          "hash": "1425212228644895398"
         }
       ]
     }

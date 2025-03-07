@@ -1,5 +1,68 @@
 {
   "nodes": {
+    "@waynevanson/rollup-plugin-externals": {
+      "name": "@waynevanson/rollup-plugin-externals",
+      "type": "lib",
+      "data": {
+        "root": "packages/vite-plugin-externals",
+        "name": "@waynevanson/rollup-plugin-externals",
+        "tags": [
+          "npm:public"
+        ],
+        "metadata": {
+          "targetGroups": {
+            "NPM Scripts": [
+              "build"
+            ]
+          },
+          "description": "Externalise dependencies from package.json",
+          "js": {
+            "packageName": "@waynevanson/rollup-plugin-externals",
+            "packageExports": {
+              ".": {
+                "types": "./dist/index.d.ts",
+                "import": "./dist/index.js",
+                "node": "./dist/index.js",
+                "default": "./dist/index.js",
+                "require": "./dist/index.js"
+              }
+            },
+            "isInPackageManagerWorkspaces": true
+          }
+        },
+        "targets": {
+          "build": {
+            "executor": "nx:run-script",
+            "options": {
+              "script": "build"
+            },
+            "metadata": {
+              "scriptContent": "rollup -c",
+              "runCommand": "pnpm run build"
+            },
+            "configurations": {},
+            "parallelism": true,
+            "cache": true,
+            "dependsOn": [
+              "^build"
+            ],
+            "outputs": [
+              "{projectRoot}/dist"
+            ]
+          },
+          "nx-release-publish": {
+            "executor": "@nx/js:release-publish",
+            "dependsOn": [
+              "^nx-release-publish"
+            ],
+            "options": {},
+            "configurations": {},
+            "parallelism": true
+          }
+        },
+        "implicitDependencies": []
+      }
+    },
     "@waynevanson/compose-solid": {
       "name": "@waynevanson/compose-solid",
       "type": "lib",
@@ -7723,6 +7786,38 @@
     }
   },
   "dependencies": {
+    "@waynevanson/rollup-plugin-externals": [
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:vite",
+        "type": "static"
+      },
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:@rollup/plugin-typescript",
+        "type": "static"
+      },
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:@types/node",
+        "type": "static"
+      },
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:rollup",
+        "type": "static"
+      },
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:rollup-plugin-dts",
+        "type": "static"
+      },
+      {
+        "source": "@waynevanson/rollup-plugin-externals",
+        "target": "npm:typescript",
+        "type": "static"
+      }
+    ],
     "@waynevanson/compose-solid": [
       {
         "source": "@waynevanson/compose-solid",
@@ -16769,5 +16864,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1741328499813
+  "computedAt": 1741328605529
 }

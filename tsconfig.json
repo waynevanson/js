@@ -2,7 +2,7 @@
   "files": [],
   "references": [
     { "path": "packages/stream" },
-    { "path": "packages/compose/solid" }
+    { "path": "packages/compose-solid" }
   ],
   "compilerOptions": {
     "target": "ESNext"

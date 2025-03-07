@@ -182,5 +182,123 @@
       "packages/stream/package.json",
       "nx/core/package-json"
     ]
+  },
+  "packages/vite-plugin-externals": {
+    "root": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "name": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "tags": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.0": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.description": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageMain": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.executor": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options.script": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.scriptContent": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.runCommand": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "packages/vite-plugin-externals/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.outputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.parallelism": [
+      "nx.json",
+      "nx/target-defaults"
+    ]
   }
 }

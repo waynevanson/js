@@ -270,3 +270,30 @@
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.181Z - [WATCHER]: Stopping the watcher for /home/waynevanson/code/waynevanson/js (sources)
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.181Z - [WATCHER]: Stopping the watcher for /home/waynevanson/code/waynevanson/js (outputs)
 [NX v20.5.0 Daemon Server] - 2025-03-07T06:22:21.184Z - Server stopped because: "Stopping the daemon the set of ignored files changed (native)"
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.012Z - Started listening on: /tmp/nix-shell.h1KYWK/42e25451e37e435b5d84/d.sock
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.013Z - [WATCHER]: Subscribed to changes within: /home/waynevanson/code/waynevanson/js (native)
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.020Z - Established a connection. Number of open connections: 1
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.020Z - Established a connection. Number of open connections: 2
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.022Z - Closed a connection. Number of open connections: 1
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.022Z - [REQUEST]: Client Request for Project Graph Received
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.029Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.029Z - [REQUEST]: 
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.030Z - [REQUEST]: 
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.279Z - [SYNC]: collect registered sync generators
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.280Z - [REQUEST]: Responding to the client. project-graph
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.280Z - Time taken for 'total for creating and serializing project graph' 257.16145800000004ms
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.281Z - Done responding to the client project-graph
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.281Z - Handled REQUEST_PROJECT_GRAPH. Handling time: 258. Response time: 1.
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.287Z - [REQUEST]: Responding to the client. handleContextFileData
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.287Z - Done responding to the client handleContextFileData
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:39.287Z - Handled GET_CONTEXT_FILE_DATA. Handling time: 1. Response time: 0.
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:22:42.352Z - Closed a connection. Number of open connections: 0
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.416Z - [WATCHER]: tsconfig.json was modified
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.416Z - [WATCHER]: Processing file changes in outputs
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.517Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.517Z - [REQUEST]: tsconfig.json
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.517Z - [REQUEST]: 
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.531Z - [SYNC]: collect registered sync generators
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.531Z - [SYNC]: project graph hash is the same, not collecting task sync generators
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.531Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX v20.5.0 Daemon Server] - 2025-03-07T06:23:25.532Z - Time taken for 'hash changed files from watcher' 0.13701600000058534ms
