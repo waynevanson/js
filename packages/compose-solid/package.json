@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "release": "release-it --config ../../release-it.ts --dry-run"
+    "release": "release-it --config ../../release-it.ts"
   },
   "devDependencies": {
     "@waynevanson/rollup-plugin-externals": "file:../vite-plugin-externals",
