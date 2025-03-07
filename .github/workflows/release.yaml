@@ -41,3 +41,5 @@ jobs:
 
       - run: pnpm exec lerna run release
         name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
