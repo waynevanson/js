@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "composite": true,
     "moduleResolution": "nodenext",
     "module": "NodeNext",
     "outDir": "dist",
-    "target": "ESNext"
+    "target": "ESNext",
+    "declaration": true
   },
-  "include": ["src"]
+  "include": ["src/"]
 }
