@@ -16,8 +16,10 @@
           version = "10.6.0";
           hash = "sha256-ceojXmEeLI5gQ//KHCePggifcd/sTR6dAbR4JeXpL4k=";
         };
+        lerna = pkgs.writeShellScriptBin "lerna" "pnpm exec lerna $@";
         nativeBuildInputs = with pkgs; [
           direnv
+          lerna
           nodejs
           pnpm
         ];

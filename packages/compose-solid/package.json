@@ -2,6 +2,11 @@
   "name": "@waynevanson/compose-solid",
   "version": "0.0.0",
   "type": "module",
+  "private": false,
+  "author": {
+    "name": "Wayne Van Son",
+    "email": "waynevanson@gmail.com"
+  },
   "exports": {
     ".": {
       "solid": "./dist/index.mjs",
@@ -12,10 +17,12 @@
     }
   },
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "release": "release-it --config ../../release-it.ts --dry-run"
   },
   "devDependencies": {
     "@waynevanson/rollup-plugin-externals": "file:../vite-plugin-externals",
+    "release-it": "^18.1.2",
     "rollup-preset-solid": "^3.0.0",
     "solid-js": "^1.9.5",
     "vite": "^6.2.0",

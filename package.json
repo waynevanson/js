@@ -4,8 +4,10 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@types/node": "22",
     "lerna": "^8.2.1",
     "nx": "^20.5.0",
+    "release-it": "^18.1.2",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
   }

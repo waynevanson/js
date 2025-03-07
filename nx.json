@@ -4,6 +4,9 @@
       "cache": true,
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist"]
+    },
+    "release": {
+      "dependsOn": ["^build"]
     }
   }
 }
