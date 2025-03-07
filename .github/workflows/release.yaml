@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: corepack enable
+        name: Enable corepack
+
       - uses: pnpm/action-setup@v4
         name: "PNPM"
         with:
@@ -36,10 +39,7 @@ jobs:
             nx-${{ runner.os }}-
 
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
-        name: Install
-
-      - run: pnpm exec lerna run build
-        name: Build
+        name: Install dependencies
 
       - run: pnpm exec lerna run release
         name: Release
