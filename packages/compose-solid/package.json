@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "private": false,
+  "files": [
+    "dist"
+  ],
   "author": {
     "name": "Wayne Van Son",
     "email": "waynevanson@gmail.com"
