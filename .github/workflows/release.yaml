@@ -16,9 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: corepack enable
-        name: Enable corepack
-
       - uses: pnpm/action-setup@v4
         name: "PNPM"
         with:
