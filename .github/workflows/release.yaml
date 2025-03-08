@@ -38,6 +38,13 @@ jobs:
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
         name: Install dependencies
 
+      - run: |
+          pnpm --version
+          node --version
+          pnpm version
+          corepack --version
+          npm version
+
       - run: pnpm exec lerna run release
         name: Release
         env:
