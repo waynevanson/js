@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "release": "release-it --config ../../release-it.ts"
+    "release": "release-it --config ../../release-it.ts --debug"
   },
   "devDependencies": {
     "@waynevanson/vite-plugin-externals": "file:../vite-plugin-externals",
