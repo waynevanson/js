@@ -18,10 +18,10 @@
         };
         lerna = pkgs.writeShellScriptBin "lerna" "pnpm exec lerna $@";
         nativeBuildInputs = with pkgs; [
+          corepack
           direnv
           lerna
           nodejs
-          pnpm
         ];
       in {
         devShells.default =
