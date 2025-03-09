@@ -20,7 +20,7 @@ const headerPartial = fs
 
 export default {
   branches: ["main"],
-  tagFormat: `${version}`,
+  tagFormat: `${packageName}@${version}`,
   plugins: [
     // todo: add more field commits here
     "@semantic-release/commit-analyzer",
