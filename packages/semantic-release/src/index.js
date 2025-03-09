@@ -12,6 +12,8 @@ if (!packageName) {
 }
 
 const version = "${version}"
+
+// includes scope and package name in the github release for the changelog.
 const headerPartial = fs
   .readFileSync(path.resolve(import.meta.dirname, "./header.hbs"), {
     encoding: "utf8",
