@@ -38,7 +38,7 @@ export default {
       "@semantic-release/npm",
       {
         tarballDir: "dist/",
-        registry: "https://registry.npmjs.org/",
+        registry: "https://npm.pkg.github.com/",
       },
     ],
     [
