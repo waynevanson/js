@@ -32,6 +32,18 @@ export default {
         },
       },
     ],
-    ["@semantic-release/github", {}],
+    [
+      "@semantic-release/npm",
+      {
+        tarballDir: "dist/",
+        registry: "https://registry.npmjs.org/",
+      },
+    ],
+    [
+      "@semantic-release/github",
+      {
+        assets: "dist/*.tgz",
+      },
+    ],
   ],
 }
