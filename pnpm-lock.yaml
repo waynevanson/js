@@ -49,12 +49,18 @@ importers:
 
   packages/compose-solid:
     devDependencies:
+      '@waynevanson/semantic-release':
+        specifier: file:../semantic-release
+        version: link:../semantic-release
       '@waynevanson/vite-plugin-externals':
         specifier: file:../vite-plugin-externals
         version: link:../vite-plugin-externals
       release-it:
         specifier: ^18.1.2
         version: 18.1.2(@types/node@22.13.9)(typescript@5.8.2)
+      semantic-release:
+        specifier: ^24.2.3
+        version: 24.2.3(typescript@5.8.2)
       solid-js:
         specifier: ^1.9.5
         version: 1.9.5
@@ -70,6 +76,8 @@ importers:
       vitest:
         specifier: ^3.0.8
         version: 3.0.8(@types/node@22.13.9)(yaml@2.7.0)
+
+  packages/semantic-release: {}
 
   packages/stream: {}
 

@@ -21,11 +21,13 @@
   },
   "scripts": {
     "build": "vite build",
-    "release": "release-it --config ../../release-it.ts --debug"
+    "release": "semantic-release"
   },
   "devDependencies": {
+    "@waynevanson/semantic-release": "file:../semantic-release",
     "@waynevanson/vite-plugin-externals": "file:../vite-plugin-externals",
     "release-it": "^18.1.2",
+    "semantic-release": "^24.2.3",
     "solid-js": "^1.9.5",
     "vite": "^6.2.1",
     "vite-plugin-dts": "^4.5.3",

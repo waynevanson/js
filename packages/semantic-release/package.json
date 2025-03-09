@@ -1,0 +1,8 @@
+{
+  "name": "@waynevanson/semantic-release",
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    "default": "./src/index.js"
+  }
+}
