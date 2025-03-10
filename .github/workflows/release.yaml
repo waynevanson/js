@@ -44,7 +44,6 @@ jobs:
       - run: pnpm run release
         name: Release
         env:
-          GITHUB_TOKEN: "cunt"
           GH_TOKEN: "cunt"
           NODE_AUTH_TOKEN: "cunt"
           NPM_TOKEN: "cunt"
