@@ -5,7 +5,7 @@
   "private": false,
   "repository": {
     "directory": "packages/compose-solid",
-    "url": "https://github.com/waynevanson/js",
+    "url": "https://github.com/waynevanson/js.git",
     "type": "git"
   },
   "files": [
