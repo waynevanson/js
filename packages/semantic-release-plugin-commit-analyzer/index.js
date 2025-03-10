@@ -8,6 +8,8 @@ import analyzeCommit from "./lib/analyze-commit.js";
 import compareReleaseTypes from "./lib/compare-release-types.js";
 import RELEASE_TYPES from "./lib/default-release-types.js";
 import DEFAULT_RELEASE_RULES from "./lib/default-release-rules.js";
+import { matcher } from "micromatch";
+import { execFileSync } from "node:child_process";
 
 const debug = debugFactory("semantic-release:commit-analyzer");
 
@@ -32,11 +34,21 @@ export async function analyzeCommits(pluginConfig, context) {
   let releaseType = null;
 
   const parser = new CommitParser(config);
+  const matches = matcher(pluginConfig?.commitPathPatterns ?? "*", pluginConfig?.commitPathOptions);
   const filteredCommits = filterRevertedCommitsSync(
     commits
       .filter(({ message, hash }) => {
         if (!message.trim()) {
           debug("Skip commit %s with empty message", hash);
+          return false;
+        }
+
+        const paths = execFileSync("git", ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", hash], {
+          encoding: "utf-8",
+        }).split("\n");
+
+        if (!matches(paths)) {
+          debug("Skip commit %s mismatching %o", hash, pluginConfig.commitPathPatterns);
           return false;
         }
 
