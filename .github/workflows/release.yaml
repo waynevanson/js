@@ -27,27 +27,12 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - uses: actions/cache@v4
-        name: "Nx"
-        with:
-          path: .nx
-          key: nx-${{ runner.os }}-${{ github.sha }}
-          restore-keys: |
-            nx-${{ runner.os }}-
-
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
         name: Install dependencies
-
-      - run: |
-          pnpm --version
-          node --version
-          pnpm version
-          corepack --version
-          npm version
 
       - run: pnpm run release
         name: Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
