@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@waynevanson/semantic-release": "workspace:../semantic-release",
-    "@waynevanson/vite-plugin-externals": "workspaces:../vite-plugin-externals",
+    "@waynevanson/vite-plugin-externals": "workspace:../vite-plugin-externals",
     "release-it": "^18.1.2",
     "semantic-release": "^24.2.3",
     "solid-js": "^1.9.5",
