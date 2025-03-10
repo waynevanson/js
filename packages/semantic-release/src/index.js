@@ -1,4 +1,5 @@
 //@ts-check
+import * as path from "node:path"
 
 const packageName =
   process.env["npm_package_name"] || process.env["PNPM_PACKAGE_NAME"]
@@ -10,6 +11,7 @@ if (!packageName) {
 }
 
 const version = "${version}"
+const commitPathPatterns = [path.resolve("./**")]
 
 export default {
   branches: ["main"],
@@ -17,7 +19,12 @@ export default {
   repositoryUrl: "https://github.com/waynevanson/js.git",
   plugins: [
     // todo: add more field commits here
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        commitPathPatterns,
+      },
+    ],
     "@semantic-release/release-notes-generator",
     [
       "@semantic-release/npm",

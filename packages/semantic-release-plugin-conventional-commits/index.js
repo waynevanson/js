@@ -8,6 +8,8 @@ import analyzeCommit from "./lib/analyze-commit.js";
 import compareReleaseTypes from "./lib/compare-release-types.js";
 import RELEASE_TYPES from "./lib/default-release-types.js";
 import DEFAULT_RELEASE_RULES from "./lib/default-release-rules.js";
+import { default as picomatch } from "picomatch";
+import { execFileSync } from "node:child_process";
 
 const debug = debugFactory("semantic-release:commit-analyzer");
 
@@ -31,12 +33,24 @@ export async function analyzeCommits(pluginConfig, context) {
   const config = await loadParserConfig(pluginConfig, context);
   let releaseType = null;
 
+  const matches = picomatch(pluginConfig.commitPathPatterns ?? "*");
+
   const parser = new CommitParser(config);
   const filteredCommits = filterRevertedCommitsSync(
     commits
       .filter(({ message, hash }) => {
         if (!message.trim()) {
           debug("Skip commit %s with empty message", hash);
+          return false;
+        }
+
+        const files = execFileSync("git", ["diff-tree", "--no-commit-id", "--name-only", "-r", hash], {
+          encoding: "utf-8",
+        });
+
+        // Allow filtering commits by containing file paths.
+        if (!matches(files)) {
+          debug("Skip commit %s paths not matching patterns %o", hash, pluginConfig.commitPathPatterns);
           return false;
         }
 
