@@ -44,7 +44,7 @@ jobs:
       - run: pnpm run release
         name: Release
         env:
-          GITHUB_TOKEN: ${{ github.token}}
-          GH_TOKEN: ${{ github.token }}
-          NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: cunt
+          GH_TOKEN: cunt
+          NODE_AUTH_TOKEN: cunt
+          NPM_TOKEN: cunt
