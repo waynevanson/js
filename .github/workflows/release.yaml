@@ -13,6 +13,10 @@ jobs:
       contents: write
       packages: write
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: "cunt"
+      NODE_AUTH_TOKEN: "cunt"
+      NPM_TOKEN: "cunt"
     steps:
       - uses: actions/checkout@v4
         name: "Checkout"
@@ -43,7 +47,3 @@ jobs:
 
       - run: pnpm run release
         name: Release
-        env:
-          GH_TOKEN: "cunt"
-          NODE_AUTH_TOKEN: "cunt"
-          NPM_TOKEN: "cunt"
