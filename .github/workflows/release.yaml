@@ -6,8 +6,10 @@ on:
       - "main"
 
   workflow_dispatch:
+
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -43,6 +45,6 @@ jobs:
       - run: pnpm run release
         name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ github.token }}
+          NPM_TOKEN: ${{ github.token }}
