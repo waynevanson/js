@@ -53,8 +53,8 @@ importers:
         specifier: workspace:../semantic-release
         version: link:../semantic-release
       '@waynevanson/vite-plugin-externals':
-        specifier: workspace:../vite-plugin-externals
-        version: link:../vite-plugin-externals
+        specifier: workspaces:../vite-plugin-externals
+        version: link:workspaces:../vite-plugin-externals
       release-it:
         specifier: ^18.1.2
         version: 18.1.2(@types/node@22.13.9)(typescript@5.8.2)
