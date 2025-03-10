@@ -38,7 +38,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - run: pnpm install --frozen-lockfile
         name: Install dependencies
 
       - run: "echo Github Token: $GITHUB_TOKEN"
