@@ -41,6 +41,11 @@ jobs:
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
         name: Install dependencies
 
+      - run: "echo Github Token: $GITHUB_TOKEN"
+        name: Print
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: pnpm run release
         name: Release
         env:
