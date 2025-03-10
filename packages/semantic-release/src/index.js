@@ -23,6 +23,7 @@ const headerPartial = fs
 export default {
   branches: ["main"],
   tagFormat: `${packageName}@${version}`,
+  repositoryUrl: "https://github.com/waynevanson/js.git",
   plugins: [
     // todo: add more field commits here
     "@semantic-release/commit-analyzer",
