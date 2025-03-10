@@ -50,10 +50,10 @@ importers:
   packages/compose-solid:
     devDependencies:
       '@waynevanson/semantic-release':
-        specifier: file:../semantic-release
+        specifier: workspace:../semantic-release
         version: link:../semantic-release
       '@waynevanson/vite-plugin-externals':
-        specifier: file:../vite-plugin-externals
+        specifier: workspace:../vite-plugin-externals
         version: link:../vite-plugin-externals
       release-it:
         specifier: ^18.1.2
