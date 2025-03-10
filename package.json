@@ -1,7 +1,9 @@
 {
   "packageManager": "pnpm@10.6.0",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "release": "turbo release"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -12,12 +14,9 @@
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "@types/node": "^22.13.9",
-    "lerna": "^8.2.1",
-    "nx": "20.5.0",
-    "release-it": "^18.1.2",
     "semantic-release": "^24.2.3",
+    "turbo": "^2.4.4",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
-  },
-  "version": "0.0.2"
+  }
 }

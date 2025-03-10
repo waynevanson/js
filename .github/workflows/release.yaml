@@ -45,7 +45,7 @@ jobs:
           corepack --version
           npm version
 
-      - run: pnpm exec lerna run release
+      - run: pnpm run release
         name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
