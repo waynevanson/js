@@ -19,10 +19,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: |
+      - name: Git
+        run: |
           git config --global user.email waynevanson@gmail.com
           git config --global user.name Wayne Van Son
-        name: "Git - Config"
 
       - uses: pnpm/action-setup@v4
         name: "PNPM"
