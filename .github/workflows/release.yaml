@@ -21,8 +21,8 @@ jobs:
 
       - name: Git
         run: |
-          git config --global user.email waynevanson@gmail.com
-          git config --global user.name Wayne Van Son
+          git config --global user.email "waynevanson@gmail.com"
+          git config --global user.name "Wayne Van Son"
 
       - uses: pnpm/action-setup@v4
         name: "PNPM"
