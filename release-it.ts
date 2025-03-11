@@ -26,7 +26,6 @@ export default {
   npm: {
     publish: true,
     allowSameVersion: true,
-    publishArgs: ["--registry", "https://npm.pkg.github.com"],
   },
   plugins: {
     "@release-it/conventional-changelog": {
