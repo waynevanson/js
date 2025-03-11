@@ -9,6 +9,7 @@
   ],
   "devDependencies": {
     "@types/node": "^22.13.9",
+    "release-it": "^18.1.2",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
