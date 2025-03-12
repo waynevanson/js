@@ -26,6 +26,7 @@ export default {
     tagName: full,
     commitsPath: process.cwd(),
     requireCommits: true,
+    requireCommitsFail: false,
   },
   github: {
     release: true,
