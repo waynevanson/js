@@ -36,7 +36,7 @@ jobs:
 
       - name: Find PNPM store
         id: pnpm-store-finder
-        run: echo "pnpm_store_path=$(pnpm store path) >> $GITHUB_OUTPUT
+        run: echo "pnpm_store_path=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: PNPM
         uses: actions/cache@v4
