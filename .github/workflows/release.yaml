@@ -33,7 +33,17 @@ jobs:
         name: "NodeJS"
         with:
           node-version: 20
-          cache: "pnpm"
+
+      - name: Find PNPM store
+        run: pnpm store path
+
+      # - name: PNPM
+      #   uses: actions/cache@v4
+      #   with:
+      #     path:
+      #     key: ${{ runner.os }}-pnpm-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-
 
       - name: Turbo
         uses: actions/cache@v4
