@@ -2,11 +2,12 @@
 // just get the name, find a version using conventional commits, update package json, release.
 // should be built.
 import path from "node:path"
-import { Config } from "release-it"
 
 console.info("`release-it` config read from the root")
 
-const packageName = process.env["npm_package_name"]!.split("/")
+const packageName =
+  process.env["npm_package_name"] || process.env["PNPM_PACKAGE_NAME"]
+
 const version = "${version}"
 const full = `${packageName}@${version}`
 
@@ -42,4 +43,4 @@ export default {
       },
     },
   },
-} satisfies Config
+}
