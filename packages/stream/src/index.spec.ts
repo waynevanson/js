@@ -1,5 +1,6 @@
 import { StringReplaceTranformStream } from "./index.js"
-import { describe, expect, test } from "vitest"
+import { describe, expect } from "vitest"
+import { test, fc } from "@fast-check/vitest"
 
 function createInputStream(chunks: Array<string>) {
   return new ReadableStream<string>({
@@ -50,4 +51,9 @@ describe(StringReplaceTranformStream, () => {
       `Expected the search to be non empty`,
     )
   })
+
+  // search string broken up across many chunks
 })
+
+// how to create the sections?
+function createChunksStringProp(search: string, sections: Array<number>) {}

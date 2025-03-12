@@ -12,9 +12,10 @@
     "types": "./dist/index.d.ts"
   },
   "devDependencies": {
+    "@fast-check/vitest": "^0.1.6",
     "vitest": "^3.0.8"
   },
   "scripts": {
-    "test": "vitest"
+    "test": "vitest run"
   }
 }
