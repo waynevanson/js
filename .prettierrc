@@ -18,7 +18,7 @@
   "rangeEnd": null,
   "rangeStart": 0,
   "requirePragma": false,
-  "semi": true,
+  "semi": false,
   "singleAttributePerLine": false,
   "singleQuote": false,
   "tabWidth": 2,
