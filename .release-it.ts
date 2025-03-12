@@ -35,8 +35,8 @@ export default {
   npm: {
     publish: true,
     allowSameVersion: true,
-    publishArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
-    versionArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
+    // publishArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
+    // versionArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
   },
   plugins: {
     "@release-it/conventional-changelog": {
