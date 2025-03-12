@@ -1,5 +1,7 @@
 # Changelog
 
+# [0.7.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.6.0...@waynevanson/compose-solid@0.7.0) (2025-03-12)
+
 # [0.6.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.5.0...@waynevanson/compose-solid@0.6.0) (2025-03-12)
 
 # [0.5.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.4.0...@waynevanson/compose-solid@0.5.0) (2025-03-12)
