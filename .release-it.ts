@@ -25,6 +25,7 @@ export default {
     tagAnnotation: full,
     tagName: full,
     commitsPath: process.cwd(),
+    requireCommits: true,
   },
   github: {
     release: true,
