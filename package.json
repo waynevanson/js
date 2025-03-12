@@ -6,7 +6,7 @@
     "prepare": "husky",
     "format": "prettier --write",
     "test": "turbo test",
-    "commit": "cz"
+    "cm": "cz"
   },
   "workspaces": [
     "packages/*"
