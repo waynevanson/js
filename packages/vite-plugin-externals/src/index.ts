@@ -25,7 +25,7 @@ export function externals(options?: ExternalsPluginOptions): Plugin {
 }
 
 function createConfig(
-  options?: ExternalsPluginOptions
+  options?: ExternalsPluginOptions,
 ): Required<ExternalsPluginOptions> {
   return Object.assign({}, options ?? {}, {
     dependencies: false,
@@ -37,7 +37,7 @@ function createConfig(
 
 function createExternal(
   config: Required<ExternalsPluginOptions>,
-  json: Record<string, any>
+  json: Record<string, any>,
 ): Array<string> {
   return Object.keys(config)
     .filter((key) => config[key as keyof typeof config])
@@ -47,7 +47,7 @@ function createExternal(
 
 function findClosestPackageJson(
   start = process.cwd(),
-  level = 0
+  level = 0,
 ): Record<string, any> {
   try {
     const contents = path.resolve(start, "package.json")

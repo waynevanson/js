@@ -7,7 +7,7 @@ describe("tag", () => {
     const Component = tag("a")
     expectTypeOf(Component).toEqualTypeOf<
       <Tag = "a">(
-        props: JSX.IntrinsicElements["a"] & { as?: Tag }
+        props: JSX.IntrinsicElements["a"] & { as?: Tag },
       ) => JSX.Element
     >()
   })
