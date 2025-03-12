@@ -36,9 +36,18 @@ describe(StringReplaceTranformStream, () => {
     const search = "hello"
     const replace = "world"
     const stream = new StringReplaceTranformStream(search, replace)
+
     const input = search
     const result = await applyChunksToStream([input], stream)
     const expected = replace
     expect(result).toBe(expected)
+  })
+
+  test("should throw error when the search is empty", async () => {
+    const search = ""
+    const replace = "world"
+    expect(() => new StringReplaceTranformStream(search, replace)).toThrowError(
+      `Expected the search to be non empty`,
+    )
   })
 })

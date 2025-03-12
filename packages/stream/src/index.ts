@@ -3,8 +3,8 @@ export class StringReplaceTranformStream extends TransformStream<
   string
 > {
   constructor(search: string, replace: string) {
-    if (search.length < 1) {
-      throw new Error("")
+    if (search.length <= 0) {
+      throw new Error(`Expected the search to be non empty`)
     }
 
     let buffer = ""
