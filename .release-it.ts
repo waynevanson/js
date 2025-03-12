@@ -24,7 +24,7 @@ export default {
     commitMessage: `Release ${full} [skip ci]`,
     tagAnnotation: full,
     tagName: full,
-    commitsPath,
+    commitsPath: process.cwd(),
   },
   github: {
     release: true,
