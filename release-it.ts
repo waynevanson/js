@@ -4,9 +4,13 @@
 import path from "node:path"
 import { Config } from "release-it"
 
+console.info("`release-it` config read from the root")
+
 const packageName = process.env["npm_package_name"]!.split("/")
 const version = "${version}"
 const full = `${packageName}@${version}`
+
+console.log("Working on releasing package %s", packageName)
 
 // todo: command to find root
 const root = path.dirname(path.dirname(process.cwd()))
