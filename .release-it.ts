@@ -21,7 +21,7 @@ const commitsPath = path.relative(root, process.cwd())
 
 export default {
   git: {
-    commitMessage: `Release ${full} [skip ci]`,
+    commitMessage: `chore(ci): release ${full} [skip ci]`,
     tagAnnotation: full,
     tagName: full,
     commitsPath: process.cwd(),
