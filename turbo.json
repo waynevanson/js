@@ -9,10 +9,6 @@
       "cache": false,
       "dependsOn": ["build", "^release"],
       "env": ["GITHUB_TOKEN", "GH_TOKEN", "NPM_TOKEN", "NODE_AUTH_TOKEN"]
-    },
-    "format": {},
-    "lint": {
-      "dependsOn": ["format"]
     }
   }
 }
