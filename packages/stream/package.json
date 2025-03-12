@@ -10,5 +10,11 @@
   "exports": {
     "default": "./dist/index.js",
     "types": "./dist/index.d.ts"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.8"
+  },
+  "scripts": {
+    "test": "vitest"
   }
 }
