@@ -1,1 +1,1 @@
-export { default } from "../../release-it.mjs"
+../../.release-it.ts
