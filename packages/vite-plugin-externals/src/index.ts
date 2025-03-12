@@ -13,7 +13,7 @@ export interface ExternalsPluginOptions {
 export function externals(options?: ExternalsPluginOptions): Plugin {
   const config = createConfig(options)
   return {
-    name: "@waynevanson/rollup-plugin-externals",
+    name: "@waynevanson/vite-plugin-externals",
     apply: "build",
     config() {
       const json = findClosestPackageJson()
