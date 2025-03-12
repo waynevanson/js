@@ -2,7 +2,8 @@
   "packageManager": "pnpm@10.6.0",
   "type": "module",
   "scripts": {
-    "release": "turbo release"
+    "release": "turbo release",
+    "prepare": "husky"
   },
   "workspaces": [
     "packages/*"
@@ -10,6 +11,7 @@
   "devDependencies": {
     "@release-it/conventional-changelog": "^10.0.0",
     "@types/node": "^22.13.10",
+    "husky": "^9.1.7",
     "release-it": "^18.1.2",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2",
