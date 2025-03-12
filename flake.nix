@@ -21,6 +21,7 @@
         devShells.default =
           pkgs.mkShell {
             inherit system nativeBuildInputs;
+            NODE_AUTH_TOKEN = "required-otherwise-lint-staged-hooks-fail";
           };
       }
     );
