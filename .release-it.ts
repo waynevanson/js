@@ -2,6 +2,7 @@
 // just get the name, find a version using conventional commits, update package json, release.
 // should be built.
 import path from "node:path"
+import { Config } from "release-it"
 
 console.info("`release-it` config read from the root")
 
@@ -23,6 +24,7 @@ export default {
     commitMessage: `Release ${full} [skip ci]`,
     tagAnnotation: full,
     tagName: full,
+    commitsPath,
   },
   github: {
     release: true,
@@ -38,9 +40,6 @@ export default {
         name: "angular",
       },
       infile: "CHANGELOG.md",
-      gitRawCommitsOpts: {
-        path: commitsPath,
-      },
     },
   },
-}
+} satisfies Config
