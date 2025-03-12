@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "release": "turbo release",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format": "prettier --write"
   },
   "workspaces": [
     "packages/*"
