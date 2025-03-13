@@ -40,8 +40,7 @@ function createExternal(
   json: Record<string, any>,
 ): Array<string> {
   return Object.keys(config)
-    .filter((key) => config[key as keyof typeof config])
-    .filter((key) => key in json)
+    .filter((key) => config[key as keyof typeof config] && key in json)
     .flatMap((key) => Object.keys(json[key]!))
 }
 
