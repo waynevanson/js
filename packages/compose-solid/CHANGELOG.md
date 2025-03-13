@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.11.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.10.0...@waynevanson/compose-solid@0.11.0) (2025-03-13)
+
+
+### Performance Improvements
+
+* moves two filter calls to one ([0db6e33](https://github.com/waynevanson/js/commit/0db6e337a03d0b99ffe0881e687907f0542a3528))
+
 # [0.10.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.9.0...@waynevanson/compose-solid@0.10.0) (2025-03-13)
 
 
