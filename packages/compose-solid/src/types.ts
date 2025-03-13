@@ -4,13 +4,6 @@ export type TagKind = keyof JSX.IntrinsicElements
 export type PropsKind = Record<string, unknown>
 export type OuterPropsKind = object
 
-export type ComposedComponent<
-  Tag extends TagKind,
-  OuterProps extends OuterPropsKind,
-> =
-  | ComposedMonomorphicComponent<Tag, OuterProps>
-  | ComposedPolymorphicComponent<Tag, OuterProps>
-
 export type ComposedComponentProps<
   Tag extends TagKind,
   OuterProps extends OuterPropsKind,
