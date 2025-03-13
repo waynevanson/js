@@ -1,5 +1,13 @@
 # Changelog
 
+# [0.10.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.9.0...@waynevanson/compose-solid@0.10.0) (2025-03-13)
+
+
+### Bug Fixes
+
+* **tag:** removes outer types on result ([ac62eff](https://github.com/waynevanson/js/commit/ac62eff87bc6b853043f94548df1a9b27f99eba7))
+* **types:** uses generic for the tag instead of `TagKind` ([67ce207](https://github.com/waynevanson/js/commit/67ce207a6588089b1dbeba054e6ebc82420b08fd))
+
 # [0.9.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.8.0...@waynevanson/compose-solid@0.9.0) (2025-03-13)
 
 # [0.8.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.7.0...@waynevanson/compose-solid@0.8.0) (2025-03-12)
