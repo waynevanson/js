@@ -21,7 +21,7 @@ export type ComposedComponentProps<
 export interface ComposedPolymorphicComponent<
   Tag extends TagKind,
   OuterProps extends OuterPropsKind,
-> {
+> extends ComposedMonomorphicComponent<Tag, OuterProps> {
   <As extends TagKind = Tag>(
     props: ComposedPolymorphicProps<As, OuterProps>,
   ): JSX.Element
@@ -30,7 +30,7 @@ export interface ComposedPolymorphicComponent<
 export type ComposedPolymorphicProps<
   Tag extends TagKind,
   OuterProps extends OuterPropsKind,
-> = Substitute<ComposedMonomorphicProps<TagKind, OuterProps>, { as?: Tag }>
+> = Substitute<ComposedMonomorphicProps<Tag, OuterProps>, { as?: Tag }>
 
 export interface ComposedMonomorphicComponent<
   Tag extends TagKind,
