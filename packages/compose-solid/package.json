@@ -29,7 +29,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "release": "release-it"
+    "release": "release-it",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@waynevanson/vite-plugin-externals": "workspace:../vite-plugin-externals",
