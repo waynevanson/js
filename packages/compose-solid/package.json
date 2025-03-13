@@ -33,7 +33,9 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@solidjs/testing-library": "^0.8.10",
     "@waynevanson/vite-plugin-externals": "workspace:^",
+    "jsdom": "^26.0.0",
     "solid-js": "^1.9.5",
     "vite": "^6.2.1",
     "vite-plugin-dts": "^4.5.3",
