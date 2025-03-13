@@ -1,4 +1,6 @@
 //@ts-check
+/// <reference types="vitest/config" />
+
 import { defineConfig, mergeConfig } from "vite"
 import solid from "vite-plugin-solid"
 import { externals } from "@waynevanson/vite-plugin-externals"
