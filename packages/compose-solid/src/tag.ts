@@ -1,4 +1,4 @@
-import { JSX, splitProps } from "solid-js"
+import { splitProps } from "solid-js"
 import { createDynamic } from "solid-js/web"
 import type { TagKind, ComposedPolymorphicComponent } from "./types.js"
 
