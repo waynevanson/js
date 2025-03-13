@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
-    "@types/node": "^22",
-    "rollup": "^4.34.9",
+    "@types/node": "^22.13.10",
+    "rollup": "^4.35.0",
     "rollup-plugin-dts": "^6.1.1",
     "typescript": "^5.8.2",
-    "vite": "^6"
+    "vite": "^6.2.1"
   },
   "peerDependencies": {
     "vite": "^6"

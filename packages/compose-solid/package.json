@@ -33,7 +33,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@waynevanson/vite-plugin-externals": "workspace:../vite-plugin-externals",
+    "@waynevanson/vite-plugin-externals": "workspace:^",
     "solid-js": "^1.9.5",
     "vite": "^6.2.1",
     "vite-plugin-dts": "^4.5.3",
