@@ -9,7 +9,7 @@ import type {
 export function contramap<
   Tag extends TagKind,
   PrevOuterProps extends OuterPropsKind,
-  NextOuterProps extends OuterPropsKind,
+  NextOuterProps extends OuterPropsKind = PrevOuterProps,
   As extends TagKind = Tag,
 >(
   component: ComposedPolymorphicComponent<Tag, PrevOuterProps>,
