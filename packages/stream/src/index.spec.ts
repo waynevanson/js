@@ -55,5 +55,28 @@ describe(StringReplaceTranformStream, () => {
   // search string broken up across many chunks
 })
 
+// recursive arbitrary calls
+
+const bound = (max: number) => fc.integer({ min: 1, max })
+
 // how to create the sections?
-function createChunksStringProp(search: string, sections: Array<number>) {}
+function createChunksStringProp(
+  search: string,
+  sizes: Array<number>,
+): Array<string> {
+  if (search.length === 0) {
+    throw new Error("Expected search length to be greater than 0")
+  }
+
+  const nonPositives = sizes
+    .map((size, index) => ({ size, index }))
+    .filter(({ size }) => size <= 0)
+
+  if (nonPositives.length > 0) {
+    throw new Error("Expected sizes to be only positive values")
+  }
+
+  const chunks = sizes.map((size, index) => search.slice(index, index + size))
+
+  return chunks
+}
