@@ -52,12 +52,45 @@ describe(StringReplaceTranformStream, () => {
     )
   })
 
+  const prop = fc
+    .string({ minLength: 1 })
+    .chain((string) =>
+      fc.record({
+        search: fc.constant(string),
+        sizes: countdown(string.length),
+      }),
+    )
+    .map(({ sizes, search }) => ({
+      search,
+      chunks: createChunksStringProp(search, sizes),
+    }))
+
+  test.prop([prop], { verbose: true })("proppy", async ({ chunks, search }) => {
+    const replace = search
+    const stream = new StringReplaceTranformStream(search, replace)
+
+    const result = await applyChunksToStream(chunks, stream)
+    const expected = replace
+    expect(result).toBe(expected)
+  })
+
   // search string broken up across many chunks
 })
 
 // recursive arbitrary calls
 
 const bound = (max: number) => fc.integer({ min: 1, max })
+
+// create f uct
+function countdown(max: number): fc.Arbitrary<Array<number>> {
+  return bound(max)
+    .map((value) => ({ remaining: max - value, array: [value] }))
+    .chain(({ remaining, array }) =>
+      remaining <= 0
+        ? fc.constant(array)
+        : countdown(remaining).map((right) => array.concat(right)),
+    )
+}
 
 // how to create the sections?
 function createChunksStringProp(
