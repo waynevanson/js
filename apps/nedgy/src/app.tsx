@@ -18,8 +18,6 @@ export interface AppStore {
   selecting: NodeId | undefined
 }
 
-export interface AppRefs {}
-
 export function createAppStore() {
   const [store, storeSet] = createStore<AppStore>({
     selecting: undefined,
@@ -110,6 +108,35 @@ export function createAppStore() {
     )
   }
 
+  function handleUpdateNodeAttributeName(
+    id: NodeId,
+    prev: string,
+    next: string,
+  ) {
+    storeSet(
+      "nodes",
+      id,
+      "attributes",
+      produce((attributes) => {
+        const value = attributes[prev]
+        delete attributes[prev]
+        attributes[next] = value
+      }),
+    )
+  }
+
+  function handleUpdateNodeAttributeValue(
+    id: NodeId,
+    name: string,
+    value: string,
+  ) {
+    storeSet("nodes", id, "attributes", name, value)
+  }
+
+  function handleInsertNodeAttribute(id: NodeId, name: string) {
+    storeSet("nodes", id, "attributes", { [name]: "" })
+  }
+
   return {
     store,
     storeSet,
@@ -120,6 +147,9 @@ export function createAppStore() {
     handleRemoveNode,
     isNodeSelected,
     handleDeleteEdge,
+    handleUpdateNodeAttributeName,
+    handleUpdateNodeAttributeValue,
+    handleInsertNodeAttribute,
   }
 }
 
@@ -129,9 +159,12 @@ export function App() {
     handleAddNode,
     handleRemoveNode,
     handleSelected,
+    handleDeleteEdge,
+    handleInsertNodeAttribute,
+    handleUpdateNodeAttributeName,
+    handleUpdateNodeAttributeValue,
     isNodeSelected,
     nodes,
-    handleDeleteEdge,
   } = createAppStore()
 
   return (
@@ -154,11 +187,45 @@ export function App() {
               </div>
               <div>{node.id}</div>
               <ul>
-                <For each={node.attrs}>
+                <For
+                  each={node.attrs}
+                  fallback={
+                    <input
+                      type="text"
+                      placeholder="Type to create new attribute"
+                      onchange={(event) =>
+                        handleInsertNodeAttribute(
+                          node.id,
+                          event.currentTarget.value,
+                        )
+                      }
+                    />
+                  }
+                >
                   {(attr) => (
                     <li>
-                      <div>{attr.name}</div>
-                      <div>{attr.value}</div>
+                      <input
+                        type="text"
+                        value={attr.name}
+                        onchange={(event) =>
+                          handleUpdateNodeAttributeName(
+                            node.id,
+                            attr.name,
+                            event.currentTarget.value,
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={attr.value}
+                        onchange={(event) =>
+                          handleUpdateNodeAttributeValue(
+                            node.id,
+                            attr.name,
+                            event.currentTarget.value,
+                          )
+                        }
+                      />
                     </li>
                   )}
                 </For>
