@@ -28,7 +28,6 @@ export function createAppStore() {
   const nodes = createMemo(() =>
     Object.entries(store.nodes).map(([id, attributes]) => ({
       id,
-      internal: attributes.internal,
       attrs: Object.entries(attributes).map(([name, value]) => ({
         name,
         value,
@@ -43,7 +42,10 @@ export function createAppStore() {
           source,
           target,
           weight,
-          attributes,
+          attributes: Object.entries(attributes).map(([name, value]) => ({
+            name,
+            value,
+          })),
         })),
       ),
     ),
@@ -132,6 +134,40 @@ export function createAppStore() {
     storeSet("nodes", id, { [name]: "" })
   }
 
+  function handleUpdateEdgeAttributeName(
+    edge: Record<"source" | "target" | "weight", string>,
+    name: string,
+  ) {
+    storeSet(
+      "edges",
+      edge.source,
+      edge.target,
+      edge.weight,
+      produce((attributes) => {
+        const value = attributes[name]
+        delete attributes[name]
+        attributes[name] = value
+      }),
+    )
+  }
+
+  function handleUpdateEdgeAttributeValue(
+    edge: Record<"source" | "target" | "weight", string>,
+    name: string,
+    value: string,
+  ) {
+    storeSet("edges", edge.source, edge.target, edge.weight, { [name]: value })
+  }
+
+  function handleInsertEdgeAttribute(
+    edge: Record<"source" | "target" | "weight", string>,
+    name: string,
+  ) {
+    storeSet("edges", edge.source, edge.target, edge.weight, {
+      [name]: "",
+    })
+  }
+
   return {
     store,
     storeSet,
@@ -145,6 +181,9 @@ export function createAppStore() {
     handleUpdateNodeAttributeName,
     handleUpdateNodeAttributeValue,
     handleInsertNodeAttribute,
+    handleUpdateEdgeAttributeName,
+    handleUpdateEdgeAttributeValue,
+    handleInsertEdgeAttribute,
   }
 }
 
@@ -160,6 +199,9 @@ export function App() {
     handleUpdateNodeAttributeValue,
     isNodeSelected,
     nodes,
+    handleInsertEdgeAttribute,
+    handleUpdateEdgeAttributeName,
+    handleUpdateEdgeAttributeValue,
   } = createAppStore()
 
   return (
@@ -238,6 +280,44 @@ export function App() {
                 <div>Source: {edge.source}</div>
                 <div>Target: {edge.target}</div>
               </div>
+              <ul>
+                <For each={edge.attributes}>
+                  {(attr) => (
+                    <li>
+                      <input
+                        type="text"
+                        value={attr.name}
+                        onchange={(event) =>
+                          handleUpdateEdgeAttributeName(
+                            edge,
+                            event.currentTarget.name,
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={attr.value}
+                        onchange={(event) =>
+                          handleUpdateEdgeAttributeValue(
+                            edge,
+                            attr.name,
+                            event.currentTarget.value,
+                          )
+                        }
+                      />
+                    </li>
+                  )}
+                </For>
+                <li>
+                  <input
+                    type="text"
+                    placeholder="Type to create new attribute"
+                    onchange={(event) =>
+                      handleInsertEdgeAttribute(edge, event.currentTarget.value)
+                    }
+                  />
+                </li>
+              </ul>
             </li>
           )}
         </For>
@@ -245,6 +325,3 @@ export function App() {
     </main>
   )
 }
-
-// directed, cyclical graph
-export interface Graph {}
