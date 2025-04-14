@@ -17,9 +17,7 @@ export interface AppStore {
 export function createAppStore() {
   const [store, storeSet] = createStore<AppStore>({
     selecting: undefined,
-    nodes: {
-      [uuid()]: { hey: "bro" },
-    },
+    nodes: {},
     edges: {},
   })
 
