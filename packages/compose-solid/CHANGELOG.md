@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.13.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.12.0...@waynevanson/compose-solid@0.13.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* ensure contramap can apply identity to types ([3f1f10b](https://github.com/waynevanson/js/commit/3f1f10bcbc752f44e3df85eff9e58f0282a0b2ea))
+
 # [0.12.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.11.0...@waynevanson/compose-solid@0.12.0) (2025-03-13)
 
 # [0.11.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.10.0...@waynevanson/compose-solid@0.11.0) (2025-03-13)
