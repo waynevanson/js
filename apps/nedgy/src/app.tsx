@@ -1,27 +1,35 @@
 // todo: worry less about looks and make it functional.
-import { createMemo, For, Index } from "solid-js"
+import { createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
-import styles from "./app.module.css"
 import { v7 as uuid } from "uuid"
+import styles from "./app.module.css"
 
 export type NodeId = string
-export type UserData = Record<string, string>
-export type Weight<T> = { internal: T; attributes: UserData }
+export type NodeWeightExternal = Record<string, string>
 export type NodeWeightInternal = {}
-export type NodeWeightExternal = {}
+export type Weights = {
+  internal: NodeWeightInternal
+  attributes: NodeWeightExternal
+}
 
 export interface AppStore {
-  nodes: Record<NodeId, Weight<NodeWeightInternal>>
+  nodes: Record<NodeId, Weights>
+  edges: Record<NodeId, Record<NodeId, Array<{}>>>
+  selecting: NodeId | undefined
 }
 
 export interface AppRefs {}
 
-export function App() {
+export function createAppStore() {
   const [store, storeSet] = createStore<AppStore>({
+    selecting: undefined,
     nodes: {
       [uuid()]: { attributes: { hey: "bro" }, internal: {} },
     },
+    edges: {},
   })
+
+  const isNodeSelected = createSelector(() => store.selecting)
 
   const nodes = createMemo(() =>
     Object.entries(store.nodes).map(([id, weight]) => ({
@@ -34,8 +42,48 @@ export function App() {
     })),
   )
 
+  const edges = createMemo(() =>
+    Object.entries(store.edges).flatMap(([source, targets]) =>
+      Object.entries(targets).flatMap(([target, weights]) =>
+        weights.map((weight) => ({
+          source,
+          target,
+          weight,
+        })),
+      ),
+    ),
+  )
+
   function handleAddNode() {
-    storeSet("nodes", { [uuid()]: { attributes: {}, internal: {} } })
+    storeSet("nodes", {
+      [uuid()]: { attributes: {}, internal: { selected: false } },
+    })
+  }
+
+  function handleSelected(id: NodeId) {
+    if (store.selecting === undefined) {
+      storeSet("selecting", id)
+      return
+    }
+
+    if (store.selecting !== id) {
+      storeSet(
+        "edges",
+        produce((sources) => {
+          if (!sources.hasOwnProperty(store.selecting!)) {
+            sources[store.selecting!] = {}
+          }
+
+          if (!sources[store.selecting!][id]) {
+            sources[store.selecting!][id] = []
+          }
+
+          sources[store.selecting!][id].push({})
+        }),
+      )
+    }
+
+    storeSet("selecting", undefined)
   }
 
   function handleRemoveNode(id: NodeId) {
@@ -48,6 +96,28 @@ export function App() {
     )
   }
 
+  return {
+    store,
+    storeSet,
+    nodes,
+    edges,
+    handleAddNode,
+    handleSelected,
+    handleRemoveNode,
+    isNodeSelected,
+  }
+}
+
+export function App() {
+  const {
+    edges,
+    handleAddNode,
+    handleRemoveNode,
+    handleSelected,
+    isNodeSelected,
+    nodes,
+  } = createAppStore()
+
   return (
     <main>
       <div>
@@ -57,7 +127,15 @@ export function App() {
         <For each={nodes()}>
           {(node) => (
             <li class={styles.node}>
-              <button onclick={() => handleRemoveNode(node.id)}>X</button>
+              <div>
+                <button onclick={() => handleRemoveNode(node.id)}>X</button>
+                <button
+                  aria-selected={isNodeSelected(node.id)}
+                  onclick={() => handleSelected(node.id)}
+                >
+                  O
+                </button>
+              </div>
               <div>{node.id}</div>
               <ul>
                 <For each={node.attrs}>
@@ -69,6 +147,16 @@ export function App() {
                   )}
                 </For>
               </ul>
+            </li>
+          )}
+        </For>
+      </ul>
+      <ul>
+        <For each={edges()}>
+          {(edge) => (
+            <li>
+              <div>Source: {edge.source}</div>
+              <div>Target: {edge.target}</div>
             </li>
           )}
         </For>
