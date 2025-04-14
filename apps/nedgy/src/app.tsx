@@ -5,16 +5,12 @@ import { v7 as uuid } from "uuid"
 import styles from "./app.module.css"
 
 export type NodeId = string
-export type NodeWeightExternal = Record<string, string>
+export type Attributes = Record<string, string>
 export type NodeWeightInternal = {}
-export type Weights = {
-  internal: NodeWeightInternal
-  attributes: NodeWeightExternal
-}
 
 export interface AppStore {
-  nodes: Record<NodeId, Weights>
-  edges: Record<NodeId, Record<NodeId, Record<string, {}>>>
+  nodes: Record<NodeId, Attributes>
+  edges: Record<NodeId, Record<NodeId, Record<string, Attributes>>>
   selecting: NodeId | undefined
 }
 
@@ -22,7 +18,7 @@ export function createAppStore() {
   const [store, storeSet] = createStore<AppStore>({
     selecting: undefined,
     nodes: {
-      [uuid()]: { attributes: { hey: "bro" }, internal: {} },
+      [uuid()]: { hey: "bro" },
     },
     edges: {},
   })
@@ -30,10 +26,10 @@ export function createAppStore() {
   const isNodeSelected = createSelector(() => store.selecting)
 
   const nodes = createMemo(() =>
-    Object.entries(store.nodes).map(([id, weight]) => ({
+    Object.entries(store.nodes).map(([id, attributes]) => ({
       id,
-      internal: weight.internal,
-      attrs: Object.entries(weight.attributes).map(([name, value]) => ({
+      internal: attributes.internal,
+      attrs: Object.entries(attributes).map(([name, value]) => ({
         name,
         value,
       })),
@@ -43,11 +39,11 @@ export function createAppStore() {
   const edges = createMemo(() =>
     Object.entries(store.edges).flatMap(([source, targets]) =>
       Object.entries(targets).flatMap(([target, weights]) =>
-        Object.entries(weights).map(([weight, value]) => ({
+        Object.entries(weights).map(([weight, attributes]) => ({
           source,
           target,
           weight,
-          value,
+          attributes,
         })),
       ),
     ),
@@ -55,7 +51,7 @@ export function createAppStore() {
 
   function handleAddNode() {
     storeSet("nodes", {
-      [uuid()]: { attributes: {}, internal: { selected: false } },
+      [uuid()]: {},
     })
   }
 
@@ -116,7 +112,6 @@ export function createAppStore() {
     storeSet(
       "nodes",
       id,
-      "attributes",
       produce((attributes) => {
         const value = attributes[prev]
         delete attributes[prev]
@@ -130,11 +125,11 @@ export function createAppStore() {
     name: string,
     value: string,
   ) {
-    storeSet("nodes", id, "attributes", name, value)
+    storeSet("nodes", id, name, value)
   }
 
   function handleInsertNodeAttribute(id: NodeId, name: string) {
-    storeSet("nodes", id, "attributes", { [name]: "" })
+    storeSet("nodes", id, { [name]: "" })
   }
 
   return {
@@ -187,21 +182,7 @@ export function App() {
               </div>
               <div>{node.id}</div>
               <ul>
-                <For
-                  each={node.attrs}
-                  fallback={
-                    <input
-                      type="text"
-                      placeholder="Type to create new attribute"
-                      onchange={(event) =>
-                        handleInsertNodeAttribute(
-                          node.id,
-                          event.currentTarget.value,
-                        )
-                      }
-                    />
-                  }
-                >
+                <For each={node.attrs}>
                   {(attr) => (
                     <li>
                       <input
@@ -229,6 +210,18 @@ export function App() {
                     </li>
                   )}
                 </For>
+                <li>
+                  <input
+                    type="text"
+                    placeholder="Type to create new attribute"
+                    onchange={(event) =>
+                      handleInsertNodeAttribute(
+                        node.id,
+                        event.currentTarget.value,
+                      )
+                    }
+                  />
+                </li>
               </ul>
             </li>
           )}
