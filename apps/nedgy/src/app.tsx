@@ -14,7 +14,7 @@ export type Weights = {
 
 export interface AppStore {
   nodes: Record<NodeId, Weights>
-  edges: Record<NodeId, Record<NodeId, Array<{}>>>
+  edges: Record<NodeId, Record<NodeId, Record<string, {}>>>
   selecting: NodeId | undefined
 }
 
@@ -45,10 +45,11 @@ export function createAppStore() {
   const edges = createMemo(() =>
     Object.entries(store.edges).flatMap(([source, targets]) =>
       Object.entries(targets).flatMap(([target, weights]) =>
-        weights.map((weight) => ({
+        Object.entries(weights).map(([weight, value]) => ({
           source,
           target,
           weight,
+          value,
         })),
       ),
     ),
@@ -75,10 +76,10 @@ export function createAppStore() {
           }
 
           if (!sources[store.selecting!][id]) {
-            sources[store.selecting!][id] = []
+            sources[store.selecting!][id] = {}
           }
 
-          sources[store.selecting!][id].push({})
+          sources[store.selecting!][id][uuid()] = {}
         }),
       )
     }
@@ -96,6 +97,19 @@ export function createAppStore() {
     )
   }
 
+  function handleDeleteEdge(
+    ids: Record<"source" | "target" | "weight", string>,
+  ) {
+    storeSet(
+      "edges",
+      ids.source,
+      ids.target,
+      produce((weights) => {
+        delete weights[ids.weight]
+      }),
+    )
+  }
+
   return {
     store,
     storeSet,
@@ -105,6 +119,7 @@ export function createAppStore() {
     handleSelected,
     handleRemoveNode,
     isNodeSelected,
+    handleDeleteEdge,
   }
 }
 
@@ -116,6 +131,7 @@ export function App() {
     handleSelected,
     isNodeSelected,
     nodes,
+    handleDeleteEdge,
   } = createAppStore()
 
   return (
@@ -155,8 +171,13 @@ export function App() {
         <For each={edges()}>
           {(edge) => (
             <li>
-              <div>Source: {edge.source}</div>
-              <div>Target: {edge.target}</div>
+              <div>
+                <button onclick={() => handleDeleteEdge(edge)}>X</button>
+              </div>
+              <div>
+                <div>Source: {edge.source}</div>
+                <div>Target: {edge.target}</div>
+              </div>
             </li>
           )}
         </For>
