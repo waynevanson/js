@@ -1,5 +1,5 @@
 // todo: worry less about looks and make it functional.
-import { createMemo, createSelector, For } from "solid-js"
+import { ComponentProps, createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
 import styles from "./app.module.css"
@@ -209,48 +209,18 @@ export function App() {
                 </button>
               </div>
               <div>{node.id}</div>
-              <ul>
-                <For each={node.attrs}>
-                  {(attr) => (
-                    <li>
-                      <input
-                        type="text"
-                        value={attr.name}
-                        onchange={(event) =>
-                          appstore.handleUpdateNodeAttributeName(
-                            node.id,
-                            attr.name,
-                            event.currentTarget.value,
-                          )
-                        }
-                      />
-                      <input
-                        type="text"
-                        value={attr.value}
-                        onchange={(event) =>
-                          appstore.handleUpdateNodeAttributeValue(
-                            node.id,
-                            attr.name,
-                            event.currentTarget.value,
-                          )
-                        }
-                      />
-                    </li>
-                  )}
-                </For>
-                <li>
-                  <input
-                    type="text"
-                    placeholder="Type to create new attribute"
-                    onchange={(event) =>
-                      appstore.handleInsertNodeAttribute(
-                        node.id,
-                        event.currentTarget.value,
-                      )
-                    }
-                  />
-                </li>
-              </ul>
+              <Attributes
+                attributes={node.attrs}
+                onchangeEmpty={(name) =>
+                  appstore.handleInsertNodeAttribute(node.id, name)
+                }
+                onchangeName={(prev, next) =>
+                  appstore.handleUpdateNodeAttributeName(node.id, prev, next)
+                }
+                onchangeValue={(name, value) =>
+                  appstore.handleUpdateNodeAttributeValue(node.id, name, value)
+                }
+              />
             </li>
           )}
         </For>
@@ -268,51 +238,63 @@ export function App() {
                 <div>Source: {edge.source}</div>
                 <div>Target: {edge.target}</div>
               </div>
-              <ul>
-                <For each={edge.attributes}>
-                  {(attr) => (
-                    <li>
-                      <input
-                        type="text"
-                        value={attr.name}
-                        onchange={(event) =>
-                          appstore.handleUpdateEdgeAttributeName(
-                            edge,
-                            event.currentTarget.name,
-                          )
-                        }
-                      />
-                      <input
-                        type="text"
-                        value={attr.value}
-                        onchange={(event) =>
-                          appstore.handleUpdateEdgeAttributeValue(
-                            edge,
-                            attr.name,
-                            event.currentTarget.value,
-                          )
-                        }
-                      />
-                    </li>
-                  )}
-                </For>
-                <li>
-                  <input
-                    type="text"
-                    placeholder="Type to create new attribute"
-                    onchange={(event) =>
-                      appstore.handleInsertEdgeAttribute(
-                        edge,
-                        event.currentTarget.value,
-                      )
-                    }
-                  />
-                </li>
-              </ul>
+              <Attributes
+                attributes={edge.attributes}
+                onchangeEmpty={(name) =>
+                  appstore.handleInsertEdgeAttribute(edge, name)
+                }
+                onchangeName={(_prev, next) =>
+                  appstore.handleUpdateEdgeAttributeName(edge, next)
+                }
+                onchangeValue={(name, value) =>
+                  appstore.handleUpdateEdgeAttributeValue(edge, name, value)
+                }
+              />
             </li>
           )}
         </For>
       </ul>
     </main>
+  )
+}
+
+export interface AttributesProps {
+  attributes: Array<Record<"name" | "value", string>>
+  onchangeEmpty?(name: string): void
+  onchangeName?(prev: string, next: string): void
+  onchangeValue?(name: string, value: string): void
+}
+
+export function Attributes(props: AttributesProps) {
+  return (
+    <ul>
+      <For each={props.attributes}>
+        {(attr) => (
+          <li>
+            <input
+              type="text"
+              value={attr.name}
+              onchange={(event) =>
+                props.onchangeName?.(attr.name, event.currentTarget.value)
+              }
+            />
+            <input
+              type="text"
+              value={attr.value}
+              onchange={(event) =>
+                props.onchangeValue?.(attr.name, event.currentTarget.value)
+              }
+            />
+          </li>
+        )}
+      </For>
+      <li>
+        <input
+          type="text"
+          placeholder="Attribute name"
+          onchange={(event) => props.onchangeEmpty?.(event.currentTarget.value)}
+        />
+      </li>
+    </ul>
   )
 }
