@@ -1,5 +1,5 @@
 // todo: worry less about looks and make it functional.
-import { ComponentProps, createMemo, createSelector, For } from "solid-js"
+import { createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
 import styles from "./app.module.css"
@@ -50,9 +50,7 @@ export function createAppStore() {
   )
 
   function handleAddNode() {
-    storeSet("nodes", {
-      [uuid()]: {},
-    })
+    storeSet("nodes", { [uuid()]: {} })
   }
 
   function handleSelected(id: NodeId) {
@@ -193,22 +191,17 @@ export function App() {
       <div>
         <button onclick={appstore.handleAddNode}>Add new node</button>
       </div>
-      <ul class={styles.nodes}>
+      <ul class={styles.entities}>
         <For each={appstore.nodes()}>
           {(node) => (
-            <li class={styles.node}>
-              <div>
-                <button onclick={() => appstore.handleRemoveNode(node.id)}>
-                  X
-                </button>
-                <button
-                  aria-selected={appstore.isNodeSelected(node.id)}
-                  onclick={() => appstore.handleSelected(node.id)}
-                >
-                  O
-                </button>
-              </div>
+            <li class={styles.entity}>
               <div>{node.id}</div>
+              <NodeControls
+                id={node.id}
+                selected={appstore.isNodeSelected(node.id)}
+                onremove={() => appstore.handleRemoveNode(node.id)}
+                onselect={() => appstore.handleSelected(node.id)}
+              />
               <Attributes
                 attributes={node.attrs}
                 onchangeEmpty={(name) =>
@@ -225,19 +218,15 @@ export function App() {
           )}
         </For>
       </ul>
-      <ul>
+      <ul class={styles.entities}>
         <For each={appstore.edges()}>
           {(edge) => (
-            <li>
-              <div>
-                <button onclick={() => appstore.handleDeleteEdge(edge)}>
-                  X
-                </button>
-              </div>
-              <div>
-                <div>Source: {edge.source}</div>
-                <div>Target: {edge.target}</div>
-              </div>
+            <li class={styles.entity}>
+              <EdgeControls
+                onremove={() => appstore.handleDeleteEdge(edge)}
+                source={edge.source}
+                target={edge.target}
+              />
               <Attributes
                 attributes={edge.attributes}
                 onchangeEmpty={(name) =>
@@ -255,6 +244,44 @@ export function App() {
         </For>
       </ul>
     </main>
+  )
+}
+
+export interface NodeControlsProps {
+  id: string
+  selected: boolean
+  onremove(): void
+  onselect(): void
+}
+
+export function NodeControls(props: NodeControlsProps) {
+  return (
+    <div>
+      <button onclick={() => props.onremove()}>X</button>
+      <button aria-selected={props.selected} onclick={() => props.onselect()}>
+        O
+      </button>
+    </div>
+  )
+}
+
+export interface EdgeControlsProps {
+  source: string
+  target: string
+  onremove(): void
+}
+
+export function EdgeControls(props: EdgeControlsProps) {
+  return (
+    <div>
+      <div>
+        <button onclick={() => props.onremove()}>X</button>
+      </div>
+      <div>
+        <div>Source: {props.source}</div>
+        <div>Target: {props.target}</div>
+      </div>
+    </div>
   )
 }
 
