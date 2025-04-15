@@ -186,36 +186,24 @@ export function createAppStore() {
 }
 
 export function App() {
-  const {
-    edges,
-    handleAddNode,
-    handleRemoveNode,
-    handleSelected,
-    handleDeleteEdge,
-    handleInsertNodeAttribute,
-    handleUpdateNodeAttributeName,
-    handleUpdateNodeAttributeValue,
-    isNodeSelected,
-    nodes,
-    handleInsertEdgeAttribute,
-    handleUpdateEdgeAttributeName,
-    handleUpdateEdgeAttributeValue,
-  } = createAppStore()
+  const appstore = createAppStore()
 
   return (
     <main>
       <div>
-        <button onclick={handleAddNode}>Add new node</button>
+        <button onclick={appstore.handleAddNode}>Add new node</button>
       </div>
       <ul class={styles.nodes}>
-        <For each={nodes()}>
+        <For each={appstore.nodes()}>
           {(node) => (
             <li class={styles.node}>
               <div>
-                <button onclick={() => handleRemoveNode(node.id)}>X</button>
+                <button onclick={() => appstore.handleRemoveNode(node.id)}>
+                  X
+                </button>
                 <button
-                  aria-selected={isNodeSelected(node.id)}
-                  onclick={() => handleSelected(node.id)}
+                  aria-selected={appstore.isNodeSelected(node.id)}
+                  onclick={() => appstore.handleSelected(node.id)}
                 >
                   O
                 </button>
@@ -229,7 +217,7 @@ export function App() {
                         type="text"
                         value={attr.name}
                         onchange={(event) =>
-                          handleUpdateNodeAttributeName(
+                          appstore.handleUpdateNodeAttributeName(
                             node.id,
                             attr.name,
                             event.currentTarget.value,
@@ -240,7 +228,7 @@ export function App() {
                         type="text"
                         value={attr.value}
                         onchange={(event) =>
-                          handleUpdateNodeAttributeValue(
+                          appstore.handleUpdateNodeAttributeValue(
                             node.id,
                             attr.name,
                             event.currentTarget.value,
@@ -255,7 +243,7 @@ export function App() {
                     type="text"
                     placeholder="Type to create new attribute"
                     onchange={(event) =>
-                      handleInsertNodeAttribute(
+                      appstore.handleInsertNodeAttribute(
                         node.id,
                         event.currentTarget.value,
                       )
@@ -268,11 +256,13 @@ export function App() {
         </For>
       </ul>
       <ul>
-        <For each={edges()}>
+        <For each={appstore.edges()}>
           {(edge) => (
             <li>
               <div>
-                <button onclick={() => handleDeleteEdge(edge)}>X</button>
+                <button onclick={() => appstore.handleDeleteEdge(edge)}>
+                  X
+                </button>
               </div>
               <div>
                 <div>Source: {edge.source}</div>
@@ -286,7 +276,7 @@ export function App() {
                         type="text"
                         value={attr.name}
                         onchange={(event) =>
-                          handleUpdateEdgeAttributeName(
+                          appstore.handleUpdateEdgeAttributeName(
                             edge,
                             event.currentTarget.name,
                           )
@@ -296,7 +286,7 @@ export function App() {
                         type="text"
                         value={attr.value}
                         onchange={(event) =>
-                          handleUpdateEdgeAttributeValue(
+                          appstore.handleUpdateEdgeAttributeValue(
                             edge,
                             attr.name,
                             event.currentTarget.value,
@@ -311,7 +301,10 @@ export function App() {
                     type="text"
                     placeholder="Type to create new attribute"
                     onchange={(event) =>
-                      handleInsertEdgeAttribute(edge, event.currentTarget.value)
+                      appstore.handleInsertEdgeAttribute(
+                        edge,
+                        event.currentTarget.value,
+                      )
                     }
                   />
                 </li>
