@@ -294,11 +294,12 @@ export interface AttributesProps {
 
 export function Attributes(props: AttributesProps) {
   return (
-    <ul>
+    <ul class={styles.attributes}>
       <For each={props.attributes}>
         {(attr) => (
-          <li>
+          <li class={styles.attribute}>
             <input
+              class={styles["attribute-name"]}
               type="text"
               value={attr.name}
               onchange={(event) =>
@@ -306,6 +307,7 @@ export function Attributes(props: AttributesProps) {
               }
             />
             <input
+              class={styles["attribute-value"]}
               type="text"
               value={attr.value}
               onchange={(event) =>
@@ -315,7 +317,7 @@ export function Attributes(props: AttributesProps) {
           </li>
         )}
       </For>
-      <li>
+      <li class={styles.attribute}>
         <input
           type="text"
           placeholder="Attribute name"
