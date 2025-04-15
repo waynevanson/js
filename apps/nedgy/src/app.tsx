@@ -1,17 +1,25 @@
 // todo: worry less about looks and make it functional.
-import { createMemo, createSelector, For } from "solid-js"
+import { createMemo, createSelector, createSignal, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
 import styles from "./app.module.css"
 
-export type NodeId = string
-export type Attributes = Record<string, string>
-export type NodeWeightInternal = {}
+export type AttributeName = string
+export type AttributeValue = string
+
+export type Id = string
+export type Attributes = Record<AttributeName, AttributeValue>
+
+export interface Attr {
+  name: AttributeName
+  value: AttributeValue
+}
 
 export interface AppStore {
-  nodes: Record<NodeId, Attributes>
-  edges: Record<NodeId, Record<NodeId, Record<string, Attributes>>>
-  selecting: NodeId | undefined
+  nodes: Record<Id, Id>
+  edges: Record<Id, Record<Id, Set<Id>>>
+  attributes: Record<Id, Attributes>
+  selecting: Id | undefined
 }
 
 export function createAppStore() {
@@ -19,67 +27,96 @@ export function createAppStore() {
     selecting: undefined,
     nodes: {},
     edges: {},
+    attributes: {},
   })
 
   const isNodeSelected = createSelector(() => store.selecting)
 
   const nodes = createMemo(() =>
-    Object.entries(store.nodes).map(([id, attributes]) => ({
-      id,
-      attrs: Object.entries(attributes).map(([name, value]) => ({
-        name,
-        value,
-      })),
-    })),
+    Object.entries(store.nodes)
+      .map(([nodeId, attributeId]) => ({
+        nodeId,
+        attributeId,
+        attrs: Object.entries(store.attributes[attributeId]).map(
+          ([name, value]) => ({
+            name,
+            value,
+          }),
+        ),
+      }))
+      .sort((left, right) => left.attributeId.localeCompare(right.attributeId)),
   )
 
   const edges = createMemo(() =>
-    Object.entries(store.edges).flatMap(([source, targets]) =>
-      Object.entries(targets).flatMap(([target, weights]) =>
-        Object.entries(weights).map(([weight, attributes]) => ({
-          source,
-          target,
-          weight,
-          attributes: Object.entries(attributes).map(([name, value]) => ({
-            name,
-            value,
+    Object.entries(store.edges)
+      .flatMap(([sourceNodeId, targetIds]) =>
+        Object.entries(targetIds).flatMap(([targetNodeId, attributeIds]) =>
+          Array.from(attributeIds).map((attributeId) => ({
+            sourceNodeId,
+            targetNodeId,
+            attributeId,
+            attrs: Object.entries(store.attributes[attributeId]).map(
+              ([name, value]) => ({ name, value }),
+            ),
           })),
-        })),
-      ),
-    ),
+        ),
+      )
+      .sort((left, right) => left.attributeId.localeCompare(right.attributeId)),
   )
 
   function handleAddNode() {
-    storeSet("nodes", { [uuid()]: {} })
+    const nodeId = uuid()
+    const attributeId = uuid()
+
+    storeSet(
+      produce((store) => {
+        store.nodes[nodeId] = attributeId
+        store.attributes[attributeId] = { "": "" }
+
+        return store
+      }),
+    )
   }
 
-  function handleSelected(id: NodeId) {
+  function handleSelected(nodeId: Id) {
+    // double clicked same node, deselect
     if (store.selecting === undefined) {
-      storeSet("selecting", id)
+      storeSet("selecting", nodeId)
       return
     }
 
-    if (store.selecting !== id) {
-      storeSet(
-        "edges",
-        produce((sources) => {
-          if (!sources.hasOwnProperty(store.selecting!)) {
-            sources[store.selecting!] = {}
-          }
+    storeSet(
+      produce((store) => {
+        // store
+        const selecting = store.selecting
 
-          if (!sources[store.selecting!][id]) {
-            sources[store.selecting!][id] = {}
-          }
+        // deselect
+        store.selecting = undefined
 
-          sources[store.selecting!][id][uuid()] = {}
-        }),
-      )
-    }
+        // clicked another node, create edge
+        if (selecting === nodeId) return
 
-    storeSet("selecting", undefined)
+        if (!store.edges.hasOwnProperty(selecting!)) {
+          store.edges[selecting!] = {}
+        }
+
+        if (!store.edges[selecting!][nodeId]) {
+          store.edges[selecting!][nodeId] = new Set()
+        }
+
+        const weightId = uuid()
+
+        store.edges[selecting!][nodeId] = new Set(
+          store.edges[selecting!][nodeId],
+        )
+
+        store.edges[selecting!][nodeId].add(weightId)
+        store.attributes[weightId] = { "": "" }
+      }),
+    )
   }
 
-  function handleRemoveNode(id: NodeId) {
+  function handleRemoveNode(id: Id) {
     storeSet(
       "nodes",
       produce((nodes) => {
@@ -90,78 +127,60 @@ export function createAppStore() {
   }
 
   function handleDeleteEdge(
-    ids: Record<"source" | "target" | "weight", string>,
+    ids: Record<"sourceNodeId" | "targetNodeId" | "attributeId", string>,
   ) {
+    storeSet("edges", ids.sourceNodeId, ids.targetNodeId, (attributeIds) => {
+      attributeIds = new Set(attributeIds)
+      attributeIds.delete(ids.attributeId)
+      return attributeIds
+    })
+
     storeSet(
-      "edges",
-      ids.source,
-      ids.target,
-      produce((weights) => {
-        delete weights[ids.weight]
+      "attributes",
+      produce((weight) => {
+        delete weight[ids.attributeId]
+        return weight
       }),
     )
   }
 
-  function handleUpdateNodeAttributeName(
-    id: NodeId,
-    prev: string,
-    next: string,
+  function handleUpdateAttributeName(
+    attributeId: Id,
+    prev: AttributeName,
+    next: AttributeName,
   ) {
     storeSet(
-      "nodes",
-      id,
+      "attributes",
+      attributeId,
       produce((attributes) => {
         const value = attributes[prev]
         delete attributes[prev]
         attributes[next] = value
+
+        if (prev === "") {
+          attributes[""] = ""
+        }
       }),
     )
   }
 
-  function handleUpdateNodeAttributeValue(
-    id: NodeId,
-    name: string,
-    value: string,
-  ) {
-    storeSet("nodes", id, name, value)
-  }
-
-  function handleInsertNodeAttribute(id: NodeId, name: string) {
-    storeSet("nodes", id, { [name]: "" })
+  function handleUpdateAttributeValue(attributeId: Id, attr: Attr) {
+    storeSet("attributes", attributeId, attr.name, attr.value)
   }
 
   function handleUpdateEdgeAttributeName(
-    edge: Record<"source" | "target" | "weight", string>,
+    edge: Record<"sourceNodeId" | "targetNodeId" | "attributeId", string>,
     name: string,
   ) {
     storeSet(
-      "edges",
-      edge.source,
-      edge.target,
-      edge.weight,
+      "attributes",
+      edge.attributeId,
       produce((attributes) => {
         const value = attributes[name]
         delete attributes[name]
         attributes[name] = value
       }),
     )
-  }
-
-  function handleUpdateEdgeAttributeValue(
-    edge: Record<"source" | "target" | "weight", string>,
-    name: string,
-    value: string,
-  ) {
-    storeSet("edges", edge.source, edge.target, edge.weight, { [name]: value })
-  }
-
-  function handleInsertEdgeAttribute(
-    edge: Record<"source" | "target" | "weight", string>,
-    name: string,
-  ) {
-    storeSet("edges", edge.source, edge.target, edge.weight, {
-      [name]: "",
-    })
   }
 
   return {
@@ -174,12 +193,9 @@ export function createAppStore() {
     handleRemoveNode,
     isNodeSelected,
     handleDeleteEdge,
-    handleUpdateNodeAttributeName,
-    handleUpdateNodeAttributeValue,
-    handleInsertNodeAttribute,
+    handleUpdateAttributeName,
+    handleUpdateAttributeValue,
     handleUpdateEdgeAttributeName,
-    handleUpdateEdgeAttributeValue,
-    handleInsertEdgeAttribute,
   }
 }
 
@@ -195,23 +211,25 @@ export function App() {
         <For each={appstore.nodes()}>
           {(node) => (
             <li class={styles.entity}>
-              <div>{node.id}</div>
+              <div>{node.nodeId}</div>
               <NodeControls
-                id={node.id}
-                selected={appstore.isNodeSelected(node.id)}
-                onremove={() => appstore.handleRemoveNode(node.id)}
-                onselect={() => appstore.handleSelected(node.id)}
+                id={node.nodeId}
+                selected={appstore.isNodeSelected(node.nodeId)}
+                onremove={() => appstore.handleRemoveNode(node.nodeId)}
+                onselect={() => appstore.handleSelected(node.nodeId)}
               />
               <Attributes
+                attributeId={node.attributeId}
                 attributes={node.attrs}
-                onchangeEmpty={(name) =>
-                  appstore.handleInsertNodeAttribute(node.id, name)
-                }
                 onchangeName={(prev, next) =>
-                  appstore.handleUpdateNodeAttributeName(node.id, prev, next)
+                  appstore.handleUpdateAttributeName(
+                    node.attributeId,
+                    prev,
+                    next,
+                  )
                 }
-                onchangeValue={(name, value) =>
-                  appstore.handleUpdateNodeAttributeValue(node.id, name, value)
+                onchangeValue={(attr) =>
+                  appstore.handleUpdateAttributeValue(node.attributeId, attr)
                 }
               />
             </li>
@@ -224,19 +242,21 @@ export function App() {
             <li class={styles.entity}>
               <EdgeControls
                 onremove={() => appstore.handleDeleteEdge(edge)}
-                source={edge.source}
-                target={edge.target}
+                source={edge.sourceNodeId}
+                target={edge.targetNodeId}
               />
               <Attributes
-                attributes={edge.attributes}
-                onchangeEmpty={(name) =>
-                  appstore.handleInsertEdgeAttribute(edge, name)
+                attributeId={edge.attributeId}
+                attributes={edge.attrs}
+                onchangeName={(prev, next) =>
+                  appstore.handleUpdateAttributeName(
+                    edge.attributeId,
+                    prev,
+                    next,
+                  )
                 }
-                onchangeName={(_prev, next) =>
-                  appstore.handleUpdateEdgeAttributeName(edge, next)
-                }
-                onchangeValue={(name, value) =>
-                  appstore.handleUpdateEdgeAttributeValue(edge, name, value)
+                onchangeValue={(attr) =>
+                  appstore.handleUpdateAttributeValue(edge.attributeId, attr)
                 }
               />
             </li>
@@ -293,10 +313,10 @@ export function EdgeControls(props: EdgeControlsProps) {
 }
 
 export interface AttributesProps {
-  attributes: Array<Record<"name" | "value", string>>
-  onchangeEmpty?(name: string): void
-  onchangeName?(prev: string, next: string): void
-  onchangeValue?(name: string, value: string): void
+  attributeId: Id
+  attributes: Array<Attr>
+  onchangeName?(prev: AttributeName, name: AttributeName): void
+  onchangeValue?(attr: Attr): void
 }
 
 export function Attributes(props: AttributesProps) {
@@ -318,19 +338,15 @@ export function Attributes(props: AttributesProps) {
               type="text"
               value={attr.value}
               onchange={(event) =>
-                props.onchangeValue?.(attr.name, event.currentTarget.value)
+                props.onchangeValue?.({
+                  name: attr.name,
+                  value: event.currentTarget.value,
+                })
               }
             />
           </li>
         )}
       </For>
-      <li class={styles.attribute}>
-        <input
-          type="text"
-          placeholder="Attribute name"
-          onchange={(event) => props.onchangeEmpty?.(event.currentTarget.value)}
-        />
-      </li>
     </ul>
   )
 }
