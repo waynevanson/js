@@ -273,13 +273,20 @@ export interface EdgeControlsProps {
 
 export function EdgeControls(props: EdgeControlsProps) {
   return (
-    <div>
+    <div class={styles["edge-controls"]}>
       <div>
         <button onclick={() => props.onremove()}>X</button>
       </div>
-      <div>
-        <div>Source: {props.source}</div>
-        <div>Target: {props.target}</div>
+      <div class={styles["edge-controls-liner"]}>
+        <div class={styles["edge-controls-graphic"]}>
+          <div>&#x2022;</div>
+          <div class={styles["edge-line"]} />
+          <div>&#x2022;</div>
+        </div>
+        <div class={styles["edge-controls-info"]}>
+          <div>{props.source}</div>
+          <div>{props.target}</div>
+        </div>
       </div>
     </div>
   )

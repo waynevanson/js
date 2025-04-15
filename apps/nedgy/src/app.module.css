@@ -14,13 +14,42 @@
 }
 
 .attributes {
+  padding-left: 0;
 }
 
 .attribute {
+  list-style: none;
 }
 
 .attribute-name {
 }
 
 .attribute-value {
+}
+
+.edge-line {
+  content: "";
+  width: 0.1rem;
+  background-color: #aaa;
+  min-height: 1rem;
+}
+
+.edge-controls-graphic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edge-controls {
+}
+
+.edge-controls-liner {
+  display: flex;
+}
+
+.edge-controls-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
