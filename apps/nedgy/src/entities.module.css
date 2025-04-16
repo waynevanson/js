@@ -11,4 +11,7 @@
   padding: 1rem;
   border-radius: 0.25rem;
   background-color: #eef;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
 }

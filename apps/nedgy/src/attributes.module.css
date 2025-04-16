@@ -1,13 +1,21 @@
 .attributes {
-  padding-left: 0;
+  display: grid;
+  gap: 0.25rem;
 }
 
 .attribute {
-  list-style: none;
+  display: flex;
+  gap: 0.125rem;
+}
+
+.attribute-input {
+  width: 100%;
 }
 
 .attribute-name {
+  composes: attribute-input;
 }
 
 .attribute-value {
+  composes: attribute-input;
 }

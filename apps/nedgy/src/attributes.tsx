@@ -19,6 +19,7 @@ export function Attributes(props: AttributesProps) {
               class={styles["attribute-name"]}
               type="text"
               value={attr.name}
+              placeholder="Name"
               onchange={(event) =>
                 props.onchangeName?.(
                   props.attributeId,
@@ -28,6 +29,7 @@ export function Attributes(props: AttributesProps) {
               }
             />
             <input
+              placeholder="Value"
               class={styles["attribute-value"]}
               type="text"
               value={attr.value}
