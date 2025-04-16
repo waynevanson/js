@@ -10,6 +10,7 @@ import { Attr, AttributeName, Attributes, Id } from "./types"
 export interface AppStore {
   nodes: Record<Id, Id>
   edges: Record<Id, Record<Id, Set<Id>>>
+  // todo: call it weights, because inside it stores attributes
   attributes: Record<Id, Attributes>
   selecting: Id | undefined
 }
