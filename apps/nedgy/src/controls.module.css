@@ -24,3 +24,8 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.node-controls {
+  display: flex;
+  gap: 0.5rem;
+}

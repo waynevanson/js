@@ -6,6 +6,7 @@ import { v7 as uuid } from "uuid"
 import { EdgeControls, NodeControls } from "./controls"
 import { Entities } from "./entities"
 import { Attr, AttributeName, Attributes, Id } from "./types"
+import styles from "./app.module.css"
 
 export function App() {
   const appstore = createAppStore()
@@ -26,7 +27,7 @@ export function App() {
         }
       >
         {(node) => (
-          <div>
+          <div class={styles["node-panel-header"]}>
             <div>{node.nodeId.slice(-6)}</div>
             <NodeControls
               id={node.nodeId}

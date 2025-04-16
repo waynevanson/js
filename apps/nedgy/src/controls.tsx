@@ -1,4 +1,4 @@
-import styles from "./entities.module.css"
+import styles from "./controls.module.css"
 
 export interface NodeControlsProps {
   id: string
@@ -9,7 +9,7 @@ export interface NodeControlsProps {
 
 export function NodeControls(props: NodeControlsProps) {
   return (
-    <div>
+    <div class={styles["node-controls"]}>
       <button onclick={() => props.onremove()}>X</button>
       <button aria-selected={props.selected} onclick={() => props.onselect()}>
         O
