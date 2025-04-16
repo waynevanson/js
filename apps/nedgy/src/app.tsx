@@ -1,8 +1,18 @@
 // todo: worry less about looks and make it functional.
-import { createMemo, createSelector, createSignal, For } from "solid-js"
+import {
+  Accessor,
+  children,
+  createMemo,
+  createSelector,
+  createSignal,
+  For,
+  JSX,
+  splitProps,
+} from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
 import styles from "./app.module.css"
+import { makePersisted } from "@solid-primitives/storage"
 
 export type AttributeName = string
 export type AttributeValue = string
@@ -23,12 +33,15 @@ export interface AppStore {
 }
 
 export function createAppStore() {
-  const [store, storeSet] = createStore<AppStore>({
-    selecting: undefined,
-    nodes: {},
-    edges: {},
-    attributes: {},
-  })
+  const [store, storeSet] = makePersisted(
+    createStore<AppStore>({
+      selecting: undefined,
+      nodes: {},
+      edges: {},
+      attributes: {},
+    }),
+    { name: "app-store" },
+  )
 
   const isNodeSelected = createSelector(() => store.selecting)
 
@@ -199,6 +212,38 @@ export function createAppStore() {
   }
 }
 
+export interface EntitiesPropsItem {
+  attributeId: Id
+  attrs: Array<Attr>
+}
+
+export interface EntitiesProps<T extends EntitiesPropsItem> {
+  children(itemised: T, index: Accessor<number>): JSX.Element
+  entities: Array<T>
+  onchangeName?(attributeId: Id, prev: AttributeName, name: AttributeName): void
+  onchangeValue?(attributeId: Id, attr: Attr): void
+}
+
+export function Entities<T extends EntitiesPropsItem>(props: EntitiesProps<T>) {
+  return (
+    <ul class={styles.entities}>
+      <For each={props.entities}>
+        {(entity, index) => (
+          <li class={styles.entity}>
+            {props.children(entity, index)}
+            <Attributes
+              attributeId={entity.attributeId}
+              attrs={entity.attrs}
+              onchangeName={props.onchangeName}
+              onchangeValue={props.onchangeValue}
+            />
+          </li>
+        )}
+      </For>
+    </ul>
+  )
+}
+
 export function App() {
   const appstore = createAppStore()
 
@@ -207,62 +252,46 @@ export function App() {
       <div>
         <button onclick={appstore.handleAddNode}>Add new node</button>
       </div>
-      <ul class={styles.entities}>
-        <For each={appstore.nodes()}>
-          {(node) => (
-            <li class={styles.entity}>
-              <div>{node.nodeId}</div>
-              <NodeControls
-                id={node.nodeId}
-                selected={appstore.isNodeSelected(node.nodeId)}
-                onremove={() => appstore.handleRemoveNode(node.nodeId)}
-                onselect={() => appstore.handleSelected(node.nodeId)}
-              />
-              <Attributes
-                attributeId={node.attributeId}
-                attributes={node.attrs}
-                onchangeName={(prev, next) =>
-                  appstore.handleUpdateAttributeName(
-                    node.attributeId,
-                    prev,
-                    next,
-                  )
-                }
-                onchangeValue={(attr) =>
-                  appstore.handleUpdateAttributeValue(node.attributeId, attr)
-                }
-              />
-            </li>
-          )}
-        </For>
-      </ul>
-      <ul class={styles.entities}>
-        <For each={appstore.edges()}>
-          {(edge) => (
-            <li class={styles.entity}>
-              <EdgeControls
-                onremove={() => appstore.handleDeleteEdge(edge)}
-                source={edge.sourceNodeId}
-                target={edge.targetNodeId}
-              />
-              <Attributes
-                attributeId={edge.attributeId}
-                attributes={edge.attrs}
-                onchangeName={(prev, next) =>
-                  appstore.handleUpdateAttributeName(
-                    edge.attributeId,
-                    prev,
-                    next,
-                  )
-                }
-                onchangeValue={(attr) =>
-                  appstore.handleUpdateAttributeValue(edge.attributeId, attr)
-                }
-              />
-            </li>
-          )}
-        </For>
-      </ul>
+
+      <Entities
+        entities={appstore.nodes()}
+        onchangeName={(attributeId, prev, next) =>
+          appstore.handleUpdateAttributeName(attributeId, prev, next)
+        }
+        onchangeValue={(attributeId, attr) =>
+          appstore.handleUpdateAttributeValue(attributeId, attr)
+        }
+      >
+        {(node) => (
+          <div>
+            <div>{node.nodeId}</div>
+            <NodeControls
+              id={node.nodeId}
+              selected={appstore.isNodeSelected(node.nodeId)}
+              onremove={() => appstore.handleRemoveNode(node.nodeId)}
+              onselect={() => appstore.handleSelected(node.nodeId)}
+            />
+          </div>
+        )}
+      </Entities>
+
+      <Entities
+        entities={appstore.edges()}
+        onchangeName={(attributeId, prev, next) =>
+          appstore.handleUpdateAttributeName(attributeId, prev, next)
+        }
+        onchangeValue={(attributeId, attr) =>
+          appstore.handleUpdateAttributeValue(attributeId, attr)
+        }
+      >
+        {(edge) => (
+          <EdgeControls
+            onremove={() => appstore.handleDeleteEdge(edge)}
+            source={edge.sourceNodeId}
+            target={edge.targetNodeId}
+          />
+        )}
+      </Entities>
     </main>
   )
 }
@@ -314,15 +343,15 @@ export function EdgeControls(props: EdgeControlsProps) {
 
 export interface AttributesProps {
   attributeId: Id
-  attributes: Array<Attr>
-  onchangeName?(prev: AttributeName, name: AttributeName): void
-  onchangeValue?(attr: Attr): void
+  attrs: Array<Attr>
+  onchangeName?(attributeId: Id, prev: AttributeName, name: AttributeName): void
+  onchangeValue?(attributeId: Id, attr: Attr): void
 }
 
 export function Attributes(props: AttributesProps) {
   return (
     <ul class={styles.attributes}>
-      <For each={props.attributes}>
+      <For each={props.attrs}>
         {(attr) => (
           <li class={styles.attribute}>
             <input
@@ -330,7 +359,11 @@ export function Attributes(props: AttributesProps) {
               type="text"
               value={attr.name}
               onchange={(event) =>
-                props.onchangeName?.(attr.name, event.currentTarget.value)
+                props.onchangeName?.(
+                  props.attributeId,
+                  attr.name,
+                  event.currentTarget.value,
+                )
               }
             />
             <input
@@ -338,7 +371,7 @@ export function Attributes(props: AttributesProps) {
               type="text"
               value={attr.value}
               onchange={(event) =>
-                props.onchangeValue?.({
+                props.onchangeValue?.(props.attributeId, {
                   name: attr.name,
                   value: event.currentTarget.value,
                 })
