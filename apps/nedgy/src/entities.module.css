@@ -1,0 +1,14 @@
+.entities {
+  padding-left: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+
+.entity {
+  list-style: none;
+  border: solid 1px #aafa;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  background-color: #eef;
+}

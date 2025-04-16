@@ -1,29 +1,11 @@
 // todo: worry less about looks and make it functional.
-import {
-  Accessor,
-  children,
-  createMemo,
-  createSelector,
-  createSignal,
-  For,
-  JSX,
-  splitProps,
-} from "solid-js"
+import { makePersisted } from "@solid-primitives/storage"
+import { createMemo, createSelector } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
-import styles from "./app.module.css"
-import { makePersisted } from "@solid-primitives/storage"
-
-export type AttributeName = string
-export type AttributeValue = string
-
-export type Id = string
-export type Attributes = Record<AttributeName, AttributeValue>
-
-export interface Attr {
-  name: AttributeName
-  value: AttributeValue
-}
+import { EdgeControls, NodeControls } from "./controls"
+import { Entities } from "./entities"
+import { Attr, AttributeName, Attributes, Id } from "./types"
 
 export interface AppStore {
   nodes: Record<Id, Id>
@@ -212,38 +194,6 @@ export function createAppStore() {
   }
 }
 
-export interface EntitiesPropsItem {
-  attributeId: Id
-  attrs: Array<Attr>
-}
-
-export interface EntitiesProps<T extends EntitiesPropsItem> {
-  children(itemised: T, index: Accessor<number>): JSX.Element
-  entities: Array<T>
-  onchangeName?(attributeId: Id, prev: AttributeName, name: AttributeName): void
-  onchangeValue?(attributeId: Id, attr: Attr): void
-}
-
-export function Entities<T extends EntitiesPropsItem>(props: EntitiesProps<T>) {
-  return (
-    <ul class={styles.entities}>
-      <For each={props.entities}>
-        {(entity, index) => (
-          <li class={styles.entity}>
-            {props.children(entity, index)}
-            <Attributes
-              attributeId={entity.attributeId}
-              attrs={entity.attrs}
-              onchangeName={props.onchangeName}
-              onchangeValue={props.onchangeValue}
-            />
-          </li>
-        )}
-      </For>
-    </ul>
-  )
-}
-
 export function App() {
   const appstore = createAppStore()
 
@@ -293,93 +243,5 @@ export function App() {
         )}
       </Entities>
     </main>
-  )
-}
-
-export interface NodeControlsProps {
-  id: string
-  selected: boolean
-  onremove(): void
-  onselect(): void
-}
-
-export function NodeControls(props: NodeControlsProps) {
-  return (
-    <div>
-      <button onclick={() => props.onremove()}>X</button>
-      <button aria-selected={props.selected} onclick={() => props.onselect()}>
-        O
-      </button>
-    </div>
-  )
-}
-
-export interface EdgeControlsProps {
-  source: string
-  target: string
-  onremove(): void
-}
-
-export function EdgeControls(props: EdgeControlsProps) {
-  return (
-    <div class={styles["edge-controls"]}>
-      <div>
-        <button onclick={() => props.onremove()}>X</button>
-      </div>
-      <div class={styles["edge-controls-liner"]}>
-        <div class={styles["edge-controls-graphic"]}>
-          <div>&#x2022;</div>
-          <div class={styles["edge-line"]} />
-          <div>&#x2022;</div>
-        </div>
-        <div class={styles["edge-controls-info"]}>
-          <div>{props.source}</div>
-          <div>{props.target}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export interface AttributesProps {
-  attributeId: Id
-  attrs: Array<Attr>
-  onchangeName?(attributeId: Id, prev: AttributeName, name: AttributeName): void
-  onchangeValue?(attributeId: Id, attr: Attr): void
-}
-
-export function Attributes(props: AttributesProps) {
-  return (
-    <ul class={styles.attributes}>
-      <For each={props.attrs}>
-        {(attr) => (
-          <li class={styles.attribute}>
-            <input
-              class={styles["attribute-name"]}
-              type="text"
-              value={attr.name}
-              onchange={(event) =>
-                props.onchangeName?.(
-                  props.attributeId,
-                  attr.name,
-                  event.currentTarget.value,
-                )
-              }
-            />
-            <input
-              class={styles["attribute-value"]}
-              type="text"
-              value={attr.value}
-              onchange={(event) =>
-                props.onchangeValue?.(props.attributeId, {
-                  name: attr.name,
-                  value: event.currentTarget.value,
-                })
-              }
-            />
-          </li>
-        )}
-      </For>
-    </ul>
   )
 }
