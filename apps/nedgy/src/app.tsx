@@ -7,6 +7,58 @@ import { EdgeControls, NodeControls } from "./controls"
 import { Entities } from "./entities"
 import { Attr, AttributeName, Attributes, Id } from "./types"
 
+export function App() {
+  const appstore = createAppStore()
+
+  return (
+    <main>
+      <div>
+        <button onclick={appstore.handleAddNode}>Add new node</button>
+      </div>
+
+      <Entities
+        entities={appstore.nodes()}
+        onchangeName={(attributeId, prev, next) =>
+          appstore.handleUpdateAttributeName(attributeId, prev, next)
+        }
+        onchangeValue={(attributeId, attr) =>
+          appstore.handleUpdateAttributeValue(attributeId, attr)
+        }
+      >
+        {(node) => (
+          <div>
+            <div>{node.nodeId.slice(-6)}</div>
+            <NodeControls
+              id={node.nodeId}
+              selected={appstore.isNodeSelected(node.nodeId)}
+              onremove={() => appstore.handleRemoveNode(node.nodeId)}
+              onselect={() => appstore.handleSelected(node.nodeId)}
+            />
+          </div>
+        )}
+      </Entities>
+
+      <Entities
+        entities={appstore.edges()}
+        onchangeName={(attributeId, prev, next) =>
+          appstore.handleUpdateAttributeName(attributeId, prev, next)
+        }
+        onchangeValue={(attributeId, attr) =>
+          appstore.handleUpdateAttributeValue(attributeId, attr)
+        }
+      >
+        {(edge) => (
+          <EdgeControls
+            onremove={() => appstore.handleDeleteEdge(edge)}
+            source={edge.sourceNodeId}
+            target={edge.targetNodeId}
+          />
+        )}
+      </Entities>
+    </main>
+  )
+}
+
 export interface AppStore {
   nodes: Record<Id, Id>
   edges: Record<Id, Record<Id, Set<Id>>>
@@ -193,56 +245,4 @@ export function createAppStore() {
     handleUpdateAttributeValue,
     handleUpdateEdgeAttributeName,
   }
-}
-
-export function App() {
-  const appstore = createAppStore()
-
-  return (
-    <main>
-      <div>
-        <button onclick={appstore.handleAddNode}>Add new node</button>
-      </div>
-
-      <Entities
-        entities={appstore.nodes()}
-        onchangeName={(attributeId, prev, next) =>
-          appstore.handleUpdateAttributeName(attributeId, prev, next)
-        }
-        onchangeValue={(attributeId, attr) =>
-          appstore.handleUpdateAttributeValue(attributeId, attr)
-        }
-      >
-        {(node) => (
-          <div>
-            <div>{node.nodeId}</div>
-            <NodeControls
-              id={node.nodeId}
-              selected={appstore.isNodeSelected(node.nodeId)}
-              onremove={() => appstore.handleRemoveNode(node.nodeId)}
-              onselect={() => appstore.handleSelected(node.nodeId)}
-            />
-          </div>
-        )}
-      </Entities>
-
-      <Entities
-        entities={appstore.edges()}
-        onchangeName={(attributeId, prev, next) =>
-          appstore.handleUpdateAttributeName(attributeId, prev, next)
-        }
-        onchangeValue={(attributeId, attr) =>
-          appstore.handleUpdateAttributeValue(attributeId, attr)
-        }
-      >
-        {(edge) => (
-          <EdgeControls
-            onremove={() => appstore.handleDeleteEdge(edge)}
-            source={edge.sourceNodeId}
-            target={edge.targetNodeId}
-          />
-        )}
-      </Entities>
-    </main>
-  )
 }
