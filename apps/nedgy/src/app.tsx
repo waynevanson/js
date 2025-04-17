@@ -40,9 +40,9 @@ export function App() {
         onchangeName={appstore.handleUpdateAttributeName}
         onchangeValue={appstore.handleUpdateAttributeValue}
       >
-        {(edge) => (
+        {(edge, index) => (
           <EdgeControls
-            onremove={() => appstore.handleDeleteEdge(edge)}
+            onremove={() => appstore.handleDeleteEdge(edge, index())}
             source={edge.sourceNodeId}
             target={edge.targetNodeId}
           />
@@ -54,7 +54,7 @@ export function App() {
 
 export interface AppStore {
   nodes: Record<Id, Id>
-  edges: Record<Id, Record<Id, Set<Id>>>
+  edges: Record<Id, Record<Id, Array<Id>>>
   weights: Record<Id, Attrs>
 }
 
@@ -137,16 +137,12 @@ export function createAppStore() {
         }
 
         if (!store.edges[selecting!][nodeId]) {
-          store.edges[selecting!][nodeId] = new Set()
+          store.edges[selecting!][nodeId] = []
         }
 
         const weightId = uuid()
 
-        store.edges[selecting!][nodeId] = new Set(
-          store.edges[selecting!][nodeId],
-        )
-
-        store.edges[selecting!][nodeId].add(weightId)
+        store.edges[selecting!][nodeId].push(weightId)
 
         // add an initial weight
         if (!store.weights.hasOwnProperty(weightId)) {
@@ -178,10 +174,10 @@ export function createAppStore() {
 
   function handleDeleteEdge(
     ids: Record<"sourceNodeId" | "targetNodeId" | "weightId", string>,
+    index: number,
   ) {
     storeSet("edges", ids.sourceNodeId, ids.targetNodeId, (attributeIds) => {
-      attributeIds = new Set(attributeIds)
-      attributeIds.delete(ids.weightId)
+      attributeIds.splice(index, 1)
       return attributeIds
     })
 
