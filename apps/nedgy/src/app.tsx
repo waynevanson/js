@@ -34,6 +34,12 @@ export function App() {
     ).map(([label, values]) => ({ label, values })),
   )
 
+  function handleFilterUpdate(
+    params: { label: string; value: string } | undefined,
+  ) {
+    appstore.stateSet("filter", params)
+  }
+
   return (
     <main>
       <div>
@@ -42,9 +48,17 @@ export function App() {
         <select>
           <For each={filters()}>
             {(filter) => (
-              <optgroup label={filter.label}>
+              <optgroup>
                 <For each={filter.values}>
-                  {(value) => <option>{value}</option>}
+                  {(value) => (
+                    <option
+                      onclick={() =>
+                        handleFilterUpdate({ label: filter.label, value })
+                      }
+                    >
+                      {value}
+                    </option>
+                  )}
                 </For>
               </optgroup>
             )}
@@ -95,8 +109,12 @@ export interface AppStore {
 }
 
 export function createAppStore() {
-  const [state, stateSet] = createStore<{ selecting: undefined | Id }>({
+  const [state, stateSet] = createStore<{
+    selecting: undefined | Id
+    filter: undefined | { label: AttributeName; value: AttributeValue }
+  }>({
     selecting: undefined,
+    filter: undefined,
   })
 
   const [store, storeSet] = makePersisted(
@@ -256,6 +274,8 @@ export function createAppStore() {
   return {
     store,
     storeSet,
+    state,
+    stateSet,
     nodes,
     edges,
     handleAddNode,
