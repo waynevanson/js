@@ -112,6 +112,7 @@ export function App() {
       >
         {(edge, index) => (
           <EdgeControls
+            weightId={edge.weightId}
             onremove={() => appstore.handleDeleteEdge(edge, index())}
             source={edge.sourceNodeId}
             target={edge.targetNodeId}

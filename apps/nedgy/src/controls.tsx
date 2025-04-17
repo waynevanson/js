@@ -32,15 +32,15 @@ export function NodeControls(props: NodeControlsProps) {
 export interface EdgeControlsProps {
   source: string
   target: string
+  weightId: string
   onremove(): void
 }
 
 export function EdgeControls(props: EdgeControlsProps) {
+  const title = `${props.weightId.slice(-ID_LENGTH)} (${props.source.slice(-ID_LENGTH)} -> ${props.target.slice(-ID_LENGTH)})`
   return (
     <div class={styles["node-panel-header"]}>
-      <p class={styles["node-panel-title"]}>
-        {props.source.slice(-ID_LENGTH)} -&gt; {props.target.slice(-ID_LENGTH)}
-      </p>
+      <p class={styles["node-panel-title"]}>{title}</p>
       <div class={styles["node-controls"]}>
         <button onclick={() => props.onremove()}>
           <MinusCircle />
