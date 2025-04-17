@@ -1,6 +1,7 @@
 // todo: worry less about looks and make it functional.
+// todo: create to show only attrs
 import { makePersisted } from "@solid-primitives/storage"
-import { createMemo, createSelector } from "solid-js"
+import { createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
 import { v7 as uuid } from "uuid"
 import { EdgeControls, NodeControls } from "./controls"
@@ -10,31 +11,66 @@ import { AttributeName, AttributeValue, Attrs, Id } from "./types"
 export function App() {
   const appstore = createAppStore()
 
+  const filters = createMemo(() =>
+    Object.entries(
+      Object.values(appstore.store.weights).reduce(
+        (prev, attrs) => {
+          for (const attr of attrs) {
+            if (attr.name === "") continue
+
+            if (!prev.hasOwnProperty(attr.name)) {
+              prev[attr.name] = []
+            }
+
+            if (!prev[attr.name].includes(attr.value)) {
+              prev[attr.name].push(attr.value)
+            }
+          }
+
+          return prev
+        },
+        {} as Record<AttributeName, Array<AttributeValue>>,
+      ),
+    ).map(([label, values]) => ({ label, values })),
+  )
+
   return (
     <main>
       <div>
         <button onclick={appstore.handleAddNode}>Add new node</button>
+        <p>Filter</p>
+        <select>
+          <For each={filters()}>
+            {(filter) => (
+              <optgroup label={filter.label}>
+                <For each={filter.values}>
+                  {(value) => <option>{value}</option>}
+                </For>
+              </optgroup>
+            )}
+          </For>
+        </select>
       </div>
 
+      <h2>Nodes</h2>
       <Entities
         entities={appstore.nodes()}
         onchangeName={appstore.handleUpdateAttributeName}
         onchangeValue={appstore.handleUpdateAttributeValue}
       >
         {(node) => (
-          <div>
-            <NodeControls
-              id={node.nodeId}
-              selected={appstore.isNodeSelected(node.nodeId)}
-              onremove={() =>
-                appstore.handleRemoveNode(node.nodeId, node.weightId)
-              }
-              onselect={() => appstore.handleSelected(node.nodeId)}
-            />
-          </div>
+          <NodeControls
+            id={node.nodeId}
+            selected={appstore.isNodeSelected(node.nodeId)}
+            onremove={() =>
+              appstore.handleRemoveNode(node.nodeId, node.weightId)
+            }
+            onselect={() => appstore.handleSelected(node.nodeId)}
+          />
         )}
       </Entities>
 
+      <h2>Edges</h2>
       <Entities
         entities={appstore.edges()}
         onchangeName={appstore.handleUpdateAttributeName}
