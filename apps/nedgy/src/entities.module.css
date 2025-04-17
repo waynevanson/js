@@ -1,16 +1,15 @@
 .entities {
-  padding-left: 0;
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  margin: 1rem;
 }
 
 .entity {
   list-style: none;
-  border: solid 1px #aafa;
-  padding: 1rem;
-  border-radius: 0.25rem;
-  background-color: #eef;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: oklch(80% 0% 230deg);
   display: grid;
   align-content: start;
   gap: 1rem;

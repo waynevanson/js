@@ -27,8 +27,7 @@ export function App() {
         }
       >
         {(node) => (
-          <div class={styles["node-panel-header"]}>
-            <div>{node.nodeId.slice(-6)}</div>
+          <div>
             <NodeControls
               id={node.nodeId}
               selected={appstore.isNodeSelected(node.nodeId)}

@@ -36,3 +36,14 @@
   border: 0;
   background: 0;
 }
+
+.node-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.node-panel-title {
+  font-size: 0.9em;
+}

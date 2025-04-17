@@ -11,15 +11,18 @@ export interface NodeControlsProps {
 
 export function NodeControls(props: NodeControlsProps) {
   return (
-    <div class={styles["node-controls"]}>
-      <button onclick={() => props.onremove()}>
-        <MinusCircle />
-      </button>
-      <button aria-selected={props.selected} onclick={() => props.onselect()}>
-        <Show when={props.selected} fallback={<Play />}>
-          <Pause />
-        </Show>
-      </button>
+    <div class={styles["node-panel-header"]}>
+      <p class={styles["node-panel-title"]}>{props.id.slice(-6)}</p>
+      <div class={styles["node-controls"]}>
+        <button onclick={() => props.onremove()}>
+          <MinusCircle />
+        </button>
+        <button aria-selected={props.selected} onclick={() => props.onselect()}>
+          <Show when={props.selected} fallback={<Play />}>
+            <Pause />
+          </Show>
+        </button>
+      </div>
     </div>
   )
 }
