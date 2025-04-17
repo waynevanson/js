@@ -2,6 +2,8 @@ import { Show } from "solid-js"
 import styles from "./controls.module.css"
 import { MinusCircle, Pause, Play } from "./icons"
 
+const ID_LENGTH = 3
+
 export interface NodeControlsProps {
   id: string
   selected: boolean
@@ -12,7 +14,7 @@ export interface NodeControlsProps {
 export function NodeControls(props: NodeControlsProps) {
   return (
     <div class={styles["node-panel-header"]}>
-      <p class={styles["node-panel-title"]}>{props.id.slice(-6)}</p>
+      <p class={styles["node-panel-title"]}>{props.id.slice(-ID_LENGTH)}</p>
       <div class={styles["node-controls"]}>
         <button onclick={() => props.onremove()}>
           <MinusCircle />
@@ -37,7 +39,7 @@ export function EdgeControls(props: EdgeControlsProps) {
   return (
     <div class={styles["node-panel-header"]}>
       <p class={styles["node-panel-title"]}>
-        {props.source.slice(-6)} -&gt; {props.target.slice(-6)}
+        {props.source.slice(-ID_LENGTH)} -&gt; {props.target.slice(-ID_LENGTH)}
       </p>
       <div class={styles["node-controls"]}>
         <button onclick={() => props.onremove()}>
