@@ -128,6 +128,7 @@ export function createAppStore() {
 
   const isNodeSelected = createSelector(() => state.selecting)
 
+  // todo: apply filter
   const nodes = createMemo(() =>
     Object.entries(store.nodes).map(([nodeId, weightId]) => ({
       nodeId,
@@ -136,6 +137,7 @@ export function createAppStore() {
     })),
   )
 
+  // todo: apply filter
   const edges = createMemo(() =>
     Object.entries(store.edges).flatMap(([sourceNodeId, targetIds]) =>
       Object.entries(targetIds).flatMap(([targetNodeId, weightIds]) =>
