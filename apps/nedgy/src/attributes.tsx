@@ -1,19 +1,27 @@
 import { For } from "solid-js"
-import { Id, AttributeName, Attr } from "./types"
 import styles from "./attributes.module.css"
+import { Attr, AttributeName, AttributeValue, Id } from "./types"
 
 export interface AttributesProps {
-  attributeId: Id
+  weightId: Id
   attrs: Array<Attr>
-  onchangeName?(attributeId: Id, prev: AttributeName, name: AttributeName): void
-  onchangeValue?(attributeId: Id, attr: Attr): void
+  onchangeName?(params: {
+    weightId: Id
+    index: number
+    name: AttributeName
+  }): void
+  onchangeValue?(param: {
+    weightId: Id
+    index: number
+    value: AttributeValue
+  }): void
 }
 
 export function Attributes(props: AttributesProps) {
   return (
     <ul class={styles.attributes}>
       <For each={props.attrs}>
-        {(attr) => (
+        {(attr, index) => (
           <li class={styles.attribute}>
             <input
               class={styles["attribute-name"]}
@@ -21,11 +29,11 @@ export function Attributes(props: AttributesProps) {
               value={attr.name}
               placeholder="Name"
               onchange={(event) =>
-                props.onchangeName?.(
-                  props.attributeId,
-                  attr.name,
-                  event.currentTarget.value,
-                )
+                props.onchangeName?.({
+                  index: index(),
+                  name: event.currentTarget.value,
+                  weightId: props.weightId,
+                })
               }
             />
             <input
@@ -34,9 +42,10 @@ export function Attributes(props: AttributesProps) {
               type="text"
               value={attr.value}
               onchange={(event) =>
-                props.onchangeValue?.(props.attributeId, {
-                  name: attr.name,
+                props.onchangeValue?.({
+                  index: index(),
                   value: event.currentTarget.value,
+                  weightId: props.weightId,
                 })
               }
             />

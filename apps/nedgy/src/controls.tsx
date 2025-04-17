@@ -35,21 +35,21 @@ export interface EdgeControlsProps {
 
 export function EdgeControls(props: EdgeControlsProps) {
   return (
-    <div class={styles["edge-controls"]}>
-      <div>
-        <button onclick={() => props.onremove()}>X</button>
-      </div>
-      <div class={styles["edge-controls-liner"]}>
-        <div class={styles["edge-controls-graphic"]}>
-          <div>&#x2022;</div>
-          <div class={styles["edge-line"]} />
-          <div>&#x2022;</div>
-        </div>
-        <div class={styles["edge-controls-info"]}>
-          <div>{props.source}</div>
-          <div>{props.target}</div>
-        </div>
+    <div class={styles["node-panel-header"]}>
+      <p class={styles["node-panel-title"]}>
+        {props.source.slice(-6)} -&gt; {props.target.slice(-6)}
+      </p>
+      <div class={styles["node-controls"]}>
+        <button onclick={() => props.onremove()}>
+          <MinusCircle />
+        </button>
       </div>
     </div>
   )
+}
+
+export interface EdgeControlsProps {
+  source: string
+  target: string
+  onremove(): void
 }
