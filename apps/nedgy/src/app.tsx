@@ -65,13 +65,15 @@ export interface AppStore {
   edges: Record<Id, Record<Id, Set<Id>>>
   // todo: call it weights, because inside it stores attributes
   attributes: Record<Id, Attributes>
-  selecting: Id | undefined
 }
 
 export function createAppStore() {
+  const [state, stateSet] = createStore<{ selecting: undefined | Id }>({
+    selecting: undefined,
+  })
+
   const [store, storeSet] = makePersisted(
     createStore<AppStore>({
-      selecting: undefined,
       nodes: {},
       edges: {},
       attributes: {},
@@ -79,7 +81,7 @@ export function createAppStore() {
     { name: "app-store" },
   )
 
-  const isNodeSelected = createSelector(() => store.selecting)
+  const isNodeSelected = createSelector(() => state.selecting)
 
   const nodes = createMemo(() =>
     Object.entries(store.nodes)
@@ -128,19 +130,19 @@ export function createAppStore() {
   }
 
   function handleSelected(nodeId: Id) {
-    // double clicked same node, deselect
-    if (store.selecting === undefined) {
-      storeSet("selecting", nodeId)
+    // select a node
+    if (state.selecting === undefined) {
+      stateSet("selecting", nodeId)
       return
     }
 
     storeSet(
       produce((store) => {
         // store
-        const selecting = store.selecting
+        const selecting = state.selecting
 
         // deselect
-        store.selecting = undefined
+        stateSet("selecting", undefined)
 
         // clicked another node, create edge
         if (selecting === nodeId) return
