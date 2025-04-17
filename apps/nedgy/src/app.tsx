@@ -60,7 +60,9 @@ export function App() {
             }
           }}
         >
-          <option selected={appstore.state.selecting === undefined}></option>
+          <option selected={appstore.state.selecting === undefined}>
+            None
+          </option>
           <For each={filters()}>
             {(filter) => (
               <optgroup label={filter.label}>
