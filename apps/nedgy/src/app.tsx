@@ -63,7 +63,7 @@ export interface AppStore {
   nodes: Record<Id, Id>
   edges: Record<Id, Record<Id, Set<Id>>>
   // todo: call it weights, because inside it stores attributes
-  attributes: Record<Id, Attributes>
+  weights: Record<Id, Attributes>
 }
 
 export function createAppStore() {
@@ -75,7 +75,7 @@ export function createAppStore() {
     createStore<AppStore>({
       nodes: {},
       edges: {},
-      attributes: {},
+      weights: {},
     }),
     { name: "app-store" },
   )
@@ -87,7 +87,7 @@ export function createAppStore() {
       .map(([nodeId, attributeId]) => ({
         nodeId,
         attributeId,
-        attrs: Object.entries(store.attributes[attributeId]).map(
+        attrs: Object.entries(store.weights[attributeId]).map(
           ([name, value]) => ({
             name,
             value,
@@ -105,7 +105,7 @@ export function createAppStore() {
             sourceNodeId,
             targetNodeId,
             attributeId,
-            attrs: Object.entries(store.attributes[attributeId]).map(
+            attrs: Object.entries(store.weights[attributeId]).map(
               ([name, value]) => ({ name, value }),
             ),
           })),
@@ -121,7 +121,7 @@ export function createAppStore() {
     storeSet(
       produce((store) => {
         store.nodes[nodeId] = attributeId
-        store.attributes[attributeId] = { "": "" }
+        store.weights[attributeId] = { "": "" }
 
         return store
       }),
@@ -161,7 +161,7 @@ export function createAppStore() {
         )
 
         store.edges[selecting!][nodeId].add(weightId)
-        store.attributes[weightId] = { "": "" }
+        store.weights[weightId] = { "": "" }
       }),
     )
   }
@@ -186,7 +186,7 @@ export function createAppStore() {
     })
 
     storeSet(
-      "attributes",
+      "weights",
       produce((weight) => {
         delete weight[ids.attributeId]
         return weight
@@ -200,7 +200,7 @@ export function createAppStore() {
     next: AttributeName,
   ) {
     storeSet(
-      "attributes",
+      "weights",
       attributeId,
       produce((attributes) => {
         const value = attributes[prev]
@@ -215,7 +215,7 @@ export function createAppStore() {
   }
 
   function handleUpdateAttributeValue(attributeId: Id, attr: Attr) {
-    storeSet("attributes", attributeId, attr.name, attr.value)
+    storeSet("weights", attributeId, attr.name, attr.value)
   }
 
   function handleUpdateEdgeAttributeName(
@@ -223,7 +223,7 @@ export function createAppStore() {
     name: string,
   ) {
     storeSet(
-      "attributes",
+      "weights",
       edge.attributeId,
       produce((attributes) => {
         const value = attributes[name]
