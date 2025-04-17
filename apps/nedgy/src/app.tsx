@@ -45,15 +45,33 @@ export function App() {
       <div>
         <button onclick={appstore.handleAddNode}>Add new node</button>
         <p>Filter</p>
-        <select>
+        <select
+          onchange={(event) => {
+            const label =
+              event.target.selectedOptions.item(0)?.dataset.optgrouplabel
+
+            if (label == null) {
+              handleFilterUpdate(undefined)
+            } else {
+              handleFilterUpdate({
+                label,
+                value: event.target.value,
+              })
+            }
+          }}
+        >
+          <option selected={appstore.state.selecting === undefined}></option>
           <For each={filters()}>
             {(filter) => (
-              <optgroup>
+              <optgroup label={filter.label}>
                 <For each={filter.values}>
                   {(value) => (
                     <option
-                      onclick={() =>
-                        handleFilterUpdate({ label: filter.label, value })
+                      data-optgrouplabel={filter.label}
+                      value={value}
+                      selected={
+                        filter.label === appstore.state.filter?.label &&
+                        value === appstore.state.filter.value
                       }
                     >
                       {value}
@@ -130,25 +148,45 @@ export function createAppStore() {
 
   // todo: apply filter
   const nodes = createMemo(() =>
-    Object.entries(store.nodes).map(([nodeId, weightId]) => ({
-      nodeId,
-      weightId,
-      attrs: store.weights[weightId],
-    })),
+    Object.entries(store.nodes)
+      .map(([nodeId, weightId]) => ({
+        nodeId,
+        weightId,
+        attrs: store.weights[weightId],
+      }))
+      .filter((edge) =>
+        state.filter === undefined
+          ? true
+          : edge.attrs.some(
+              (attr) =>
+                attr.name === state.filter!.label &&
+                attr.value === state.filter!.value,
+            ),
+      ),
   )
 
   // todo: apply filter
   const edges = createMemo(() =>
-    Object.entries(store.edges).flatMap(([sourceNodeId, targetIds]) =>
-      Object.entries(targetIds).flatMap(([targetNodeId, weightIds]) =>
-        Array.from(weightIds).map((weightId) => ({
-          sourceNodeId,
-          targetNodeId,
-          weightId,
-          attrs: store.weights[weightId],
-        })),
+    Object.entries(store.edges)
+      .flatMap(([sourceNodeId, targetIds]) =>
+        Object.entries(targetIds).flatMap(([targetNodeId, weightIds]) =>
+          Array.from(weightIds).map((weightId) => ({
+            sourceNodeId,
+            targetNodeId,
+            weightId,
+            attrs: store.weights[weightId],
+          })),
+        ),
+      )
+      .filter(
+        (edge) =>
+          !state.filter ||
+          edge.attrs.some(
+            (attr) =>
+              attr.name === state.filter!.label &&
+              attr.value === state.filter!.value,
+          ),
       ),
-    ),
   )
 
   function handleAddNode() {
