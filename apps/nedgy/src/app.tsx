@@ -270,10 +270,15 @@ export function createAppStore() {
     ids: Record<"sourceNodeId" | "targetNodeId" | "weightId", string>,
     index: number,
   ) {
-    storeSet("edges", ids.sourceNodeId, ids.targetNodeId, (attributeIds) => {
-      attributeIds.splice(index, 1)
-      return attributeIds
-    })
+    storeSet(
+      "edges",
+      ids.sourceNodeId,
+      ids.targetNodeId,
+      produce((attributeIds) => {
+        attributeIds.splice(index, 1)
+        return attributeIds
+      }),
+    )
 
     storeSet(
       "weights",
