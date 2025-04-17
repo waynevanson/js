@@ -1,4 +1,6 @@
+import { Show } from "solid-js"
 import styles from "./controls.module.css"
+import { MinusCircle, Pause, Play } from "./icons"
 
 export interface NodeControlsProps {
   id: string
@@ -10,9 +12,13 @@ export interface NodeControlsProps {
 export function NodeControls(props: NodeControlsProps) {
   return (
     <div class={styles["node-controls"]}>
-      <button onclick={() => props.onremove()}>X</button>
+      <button onclick={() => props.onremove()}>
+        <MinusCircle />
+      </button>
       <button aria-selected={props.selected} onclick={() => props.onselect()}>
-        O
+        <Show when={props.selected} fallback={<Play />}>
+          <Pause />
+        </Show>
       </button>
     </div>
   )

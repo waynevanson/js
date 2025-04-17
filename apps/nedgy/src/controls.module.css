@@ -29,3 +29,10 @@
   display: flex;
   gap: 0.5rem;
 }
+
+.node-controls button {
+  padding: 0;
+  aspect-ratio: 1;
+  border: 0;
+  background: 0;
+}
