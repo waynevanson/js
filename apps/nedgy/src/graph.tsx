@@ -9,7 +9,6 @@
 import { createElementSize } from "@solid-primitives/resize-observer"
 import { createMemo, For } from "solid-js"
 import { Id } from "./types"
-import { off } from "process"
 
 const EDGE_DISTANCE = 100
 
@@ -59,14 +58,19 @@ export function Graph(props: GraphProps) {
     return Array.from({ length: count }, () => iterator.next().value)
   }
 
-  const coords = createMemo(() =>
-    take(spiral(useableSize() ?? { x: 1, y: 1 }), nodes.length).map(
-      (coord, index) => ({
-        ...coord,
-        nodeId: nodes()[index],
-      }),
-    ),
-  )
+  const coords = createMemo(() => {
+    const sized = useableSize()
+    if (sized === null) return null
+
+    const x = sized.x / 2
+    const y = sized.y / 2
+
+    take(spiral(sized), nodes.length).map((coord, index) => ({
+      cx: coord.x + x,
+      cy: coord.y + y,
+      nodeId: nodes()[index],
+    }))
+  })
 
   // todo: put in a screen buffer thing
 
@@ -77,7 +81,7 @@ export function Graph(props: GraphProps) {
       <g>
         <For each={coords()}>
           {(node) => (
-            <circle r={5} cx={node.x} cy={node.y}>
+            <circle r={5} cx={node.cx} cy={node.cy}>
               <text>{node.nodeId}</text>
             </circle>
           )}
@@ -88,21 +92,6 @@ export function Graph(props: GraphProps) {
 }
 
 type Coordinate = Record<"x" | "y", number>
-type Bound = Record<"min" | "max", number>
-
-function createScale(prev: Bound, next: Bound) {
-  const prevDiff = prev.max - prev.min
-  const nextDiff = next.max - next.min
-
-  return (value: number): number => {
-    return ((value - prev.min) * nextDiff) / prevDiff + next.min
-  }
-}
-
-function wrap(internal: number, bound: Bound) {
-  const range = bound.max - bound.min + 1
-  return ((((internal - bound.min) % range) + range) % range) + bound.min
-}
 
 function createStep(ratio: Coordinate): Coordinate {
   if (ratio.x > ratio.y) {

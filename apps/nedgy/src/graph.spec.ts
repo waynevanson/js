@@ -12,8 +12,8 @@ describe(spiral.name, () => {
     expect(result).toStrictEqual(expected)
   })
 
-  test.only("square", () => {
-    const result = take(spiral({ x: 1, y: 1 }), 9)
+  test.each([1, 2, 3, 4, 5, 100000])("square with width/height of %d", (n) => {
+    const result = take(spiral({ x: n, y: n }), 9)
     const expected: Array<Record<"x" | "y", number>> = [
       { x: 0, y: 0 },
 
