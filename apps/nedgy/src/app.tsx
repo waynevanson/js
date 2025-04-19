@@ -1,5 +1,6 @@
 // todo: worry less about looks and make it functional.
-// todo: create to show only attrs
+// todo: infer title from hashable attributes? Some sort of title.
+// todo: the graph
 import { makePersisted } from "@solid-primitives/storage"
 import { createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
@@ -7,6 +8,7 @@ import { v7 as uuid } from "uuid"
 import { EdgeControls, NodeControls } from "./controls"
 import { Entities } from "./entities"
 import { AttributeName, AttributeValue, Attrs, Id } from "./types"
+import { Graph } from "./graph"
 
 export function App() {
   const appstore = createAppStore()
