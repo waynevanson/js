@@ -1,6 +1,5 @@
 // todo: worry less about looks and make it functional.
 // todo: infer title from hashable attributes? Some sort of title.
-// todo: the graph
 import { makePersisted } from "@solid-primitives/storage"
 import { createMemo, createSelector, For } from "solid-js"
 import { createStore, produce } from "solid-js/store"
@@ -44,6 +43,8 @@ export function App() {
 
   return (
     <main>
+      <Graph edges={appstore.store.edges} nodes={appstore.store.nodes} />
+
       <div>
         <button onclick={appstore.handleAddNode}>Add new node</button>
         <p>Filter</p>

@@ -10,15 +10,15 @@ import { createElementSize } from "@solid-primitives/resize-observer"
 import { createMemo, For } from "solid-js"
 import { Id } from "./types"
 
-const EDGE_DISTANCE = 100
+const EDGE_DISTANCE = 50
 
 export interface GraphProps {
   nodes: Record<Id, Id>
-  edges: Record<Id, Record<Id, Id>>
+  edges: Record<Id, Record<Id, Array<Id>>>
 }
 
 export function Graph(props: GraphProps) {
-  let ref: undefined | HTMLElement
+  let ref: undefined | SVGSVGElement
 
   const size = createElementSize(() => ref)
 
@@ -49,8 +49,8 @@ export function Graph(props: GraphProps) {
   })
 
   const nodes = createMemo(() =>
-    Object.keys(props.nodes).sort(
-      (left, right) => degrees()[right] - degrees()[left],
+    Object.entries(props.nodes).sort(
+      ([left], [right]) => degrees()[right] - degrees()[left],
     ),
   )
 
@@ -65,36 +65,41 @@ export function Graph(props: GraphProps) {
     const x = sized.x / 2
     const y = sized.y / 2
 
-    take(spiral(sized), nodes.length).map((coord, index) => ({
-      cx: coord.x + x,
-      cy: coord.y + y,
-      nodeId: nodes()[index],
+    console.log({ sized, x, y })
+    return take(spiral(sized), nodes().length).map((coord, index) => ({
+      cx: coord.x * EDGE_DISTANCE + x,
+      cy: -coord.y * EDGE_DISTANCE + y,
+      nodeId: nodes()[index][0],
     }))
   })
 
-  // todo: put in a screen buffer thing
-
-  // todo: put nodes on screen
-
   return (
-    <article ref={ref}>
+    <svg
+      ref={ref}
+      width="30rem"
+      height="30rem"
+      viewBox={`0 0 ${size.width ?? 0} ${size.height ?? 0}`}
+    >
       <g>
         <For each={coords()}>
           {(node) => (
-            <circle r={5} cx={node.cx} cy={node.cy}>
-              <text>{node.nodeId}</text>
-            </circle>
+            <g>
+              <circle r={10} cx={node.cx} cy={node.cy} fill="#aaa" />
+              <text x={node.cx} y={node.cy}>
+                {node.nodeId.slice(-3)}
+              </text>
+            </g>
           )}
         </For>
       </g>
-    </article>
+    </svg>
   )
 }
 
 type Coordinate = Record<"x" | "y", number>
 
 function createStep(ratio: Coordinate): Coordinate {
-  if (ratio.x > ratio.y) {
+  if (ratio.x < ratio.y) {
     return { x: 1, y: ratio.x / ratio.y }
   } else {
     return { x: ratio.y / ratio.x, y: 1 }
