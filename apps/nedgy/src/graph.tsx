@@ -9,6 +9,7 @@
 import { createElementSize } from "@solid-primitives/resize-observer"
 import { createMemo, For } from "solid-js"
 import { Id } from "./types"
+import { off } from "process"
 
 const EDGE_DISTANCE = 100
 
@@ -87,8 +88,30 @@ export function Graph(props: GraphProps) {
 }
 
 type Coordinate = Record<"x" | "y", number>
+type Bound = Record<"min" | "max", number>
 
-// start at radians 0
+function createScale(prev: Bound, next: Bound) {
+  const prevDiff = prev.max - prev.min
+  const nextDiff = next.max - next.min
+
+  return (value: number): number => {
+    return ((value - prev.min) * nextDiff) / prevDiff + next.min
+  }
+}
+
+function wrap(internal: number, bound: Bound) {
+  const range = bound.max - bound.min + 1
+  return ((((internal - bound.min) % range) + range) % range) + bound.min
+}
+
+function createStep(ratio: Coordinate): Coordinate {
+  if (ratio.x > ratio.y) {
+    return { x: 1, y: ratio.x / ratio.y }
+  } else {
+    return { x: ratio.y / ratio.x, y: 1 }
+  }
+}
+
 /**
  * @summary
  * Creates an iterator of `(x, y)` coordinates that start at 0,
@@ -97,17 +120,79 @@ type Coordinate = Record<"x" | "y", number>
  * @param ratio Coordinates that indicate the relaitonships between width and height.
  */
 export function* spiral(ratio: Coordinate): Generator<Coordinate> {
+  // origin
   yield { x: 0, y: 0 }
 
-  for (let ring = 1; true; ring++) {
-    const total = Math.ceil((ratio.x / ratio.y) * ring * 8)
+  let xCurrent = 0
+  let yCurrent = 0
 
-    let x = 0
-    let y = 1
+  const { x: xStep, y: yStep } = createStep(ratio)
 
-    for (let index = -total; index < total; index++) {
-      // todo: how to know if I should use left or right?
-      yield { x, y }
+  // ring
+  while (true) {
+    const x = xCurrent
+    const y = yCurrent
+
+    xCurrent += xStep
+    yCurrent += yStep
+
+    const xDo = xStep === 1 || Math.floor(xCurrent) - Math.floor(x) !== 0
+    const yDo = yStep === 1 || Math.floor(yCurrent) - Math.floor(y) !== 0
+
+    const xmax = Math.floor(xCurrent)
+    const ymax = Math.floor(yCurrent)
+
+    let tr = false
+    let tl = false
+    let bl = false
+    let br = false
+
+    // mid right to top right
+    if (yDo) {
+      const x = xmax
+      for (let y = 0; y <= ymax; y++) {
+        yield { x, y }
+      }
+      tr = true
+    }
+
+    // top right to top left
+    if (xDo) {
+      const offset = tr ? 1 : 0
+      const y = ymax
+      for (let x = xmax - offset; x >= -xmax; x--) {
+        yield { x, y }
+      }
+      tl = true
+    }
+
+    // top left to bot right
+    if (yDo) {
+      const offset = tl ? 1 : 0
+      const x = -xmax
+      for (let y = ymax - offset; y >= -ymax; y--) {
+        yield { x, y }
+      }
+      bl = true
+    }
+
+    // bot left to bot right
+    if (xDo) {
+      const offset = bl ? 1 : 0
+      const y = -ymax
+      for (let x = -xmax + offset; x <= xmax; x++) {
+        yield { x, y }
+      }
+      br = true
+    }
+
+    // bot right to mid right
+    if (yDo) {
+      const offset = br ? 1 : 0
+      const x = xmax
+      for (let y = -xmax + offset; y < 0; y++) {
+        yield { x, y }
+      }
     }
   }
 }

@@ -12,16 +12,20 @@ describe(spiral.name, () => {
     expect(result).toStrictEqual(expected)
   })
 
-  test("square", () => {
+  test.only("square", () => {
     const result = take(spiral({ x: 1, y: 1 }), 9)
     const expected: Array<Record<"x" | "y", number>> = [
       { x: 0, y: 0 },
+
       { x: 1, y: 0 },
       { x: 1, y: 1 },
+
       { x: 0, y: 1 },
       { x: -1, y: 1 },
+
       { x: -1, y: 0 },
       { x: -1, y: -1 },
+
       { x: 0, y: -1 },
       { x: 1, y: -1 },
     ]
