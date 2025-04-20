@@ -31,4 +31,15 @@ describe(spiral.name, () => {
     ]
     expect(result).toStrictEqual(expected)
   })
+
+  test.skip("rectangle twice as wide", () => {
+    const result = take(spiral({ x: 2, y: 1 }), 3)
+    const expected: Array<Record<"x" | "y", number>> = [
+      { x: 0, y: 0 },
+
+      { x: 1, y: 0 },
+      { x: 1, y: -1 },
+    ]
+    expect(result).toStrictEqual(expected)
+  })
 })
