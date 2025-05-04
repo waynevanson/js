@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.17.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.16.0...@waynevanson/compose-solid@0.17.0) (2025-05-04)
+
+
+### Bug Fixes
+
+* allow provided props to override partial props ([9801f52](https://github.com/waynevanson/js/commit/9801f5265abdf694d987e036efa75d69e0654c64))
+
 # [0.16.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.15.0...@waynevanson/compose-solid@0.16.0) (2025-05-04)
 
 
