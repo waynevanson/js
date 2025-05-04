@@ -112,8 +112,6 @@ importers:
         specifier: ^3.0.0
         version: 3.0.8(@types/debug@4.1.12)(@types/node@22.13.10)(jiti@2.4.2)(jsdom@25.0.1)(yaml@2.7.0)
 
-  packages/cli: {}
-
   packages/compose-solid:
     devDependencies:
       '@solidjs/testing-library':
