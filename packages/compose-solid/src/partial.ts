@@ -1,7 +1,7 @@
 import { createComponent, mergeProps } from "solid-js"
 import {
+  ComposedMonomorphicProps,
   ComposedPolymorphicComponent,
-  ComposedPolymorphicProps,
   OuterPropsKind,
   Substitute,
   TagKind,
@@ -14,16 +14,15 @@ import {
 export function partial<
   Tag extends TagKind,
   OuterPropsPrev extends OuterPropsKind,
-  Partials extends Partial<ComposedPolymorphicProps<Tag, OuterPropsPrev>>,
-  As extends TagKind = Tag,
-  OuterPropsNext extends OuterPropsKind = Substitute<
-    OuterPropsPrev,
-    Partial<Partials>
-  >,
+  Partials extends ComposedMonomorphicProps<Tag, OuterPropsPrev>,
 >(
   Component: ComposedPolymorphicComponent<Tag, OuterPropsPrev>,
   partials: Partials,
-): ComposedPolymorphicComponent<As, OuterPropsNext> {
+): ComposedPolymorphicComponent<
+  Tag,
+  Substitute<OuterPropsPrev, Partial<Partials>>
+> {
+  // @ts-ignore
   return function ComposedPartialComponent(props: any) {
     const next = mergeProps(partials, props)
     return createComponent(Component, next as any)

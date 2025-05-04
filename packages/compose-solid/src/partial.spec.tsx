@@ -8,11 +8,15 @@ describe("partial", () => {
   test("should turn a required prop into a partial prop", () => {
     const First = tag("a")
     const Second = required(First, ["href"])
-    const Third = partial(Second, { href: "" })
+    const Third = partial(Second, { href: "/sds" })
 
     const result = render(() => <Third />)
   })
 
-  test.todo("should turn a partial prop into a partial prop")
-  test.todo("should turn the polymorphic as prop into a new default")
+  test("should turn a partial prop into a partial prop", () => {
+    const First = tag("a")
+    const Third = partial(First, { href: "" })
+
+    const result = render(() => <Third />)
+  })
 })
