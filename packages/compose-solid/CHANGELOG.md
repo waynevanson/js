@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.15.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.14.0...@waynevanson/compose-solid@0.15.0) (2025-05-04)
+
+
+### Features
+
+* add required api ([f988ed5](https://github.com/waynevanson/js/commit/f988ed5a4278d77e91e8776f658f5042ea01e4b7))
+
 # [0.14.0](https://github.com/waynevanson/js/compare/@waynevanson/compose-solid@0.13.0...@waynevanson/compose-solid@0.14.0) (2025-05-04)
 
 
