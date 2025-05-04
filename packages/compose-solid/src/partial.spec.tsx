@@ -1,0 +1,18 @@
+import { render } from "@solidjs/testing-library"
+import { describe, test, expect } from "vitest"
+import { tag } from "./tag.js"
+import { partial } from "./partial.js"
+import { required } from "./required.js"
+
+describe("partial", () => {
+  test("should turn a required prop into a partial prop", () => {
+    const First = tag("a")
+    const Second = required(First, ["href"])
+    const Third = partial(Second, { href: "" })
+
+    const result = render(() => <Third />)
+  })
+
+  test.todo("should turn a partial prop into a partial prop")
+  test.todo("should turn the polymorphic as prop into a new default")
+})
