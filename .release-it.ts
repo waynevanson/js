@@ -1,7 +1,3 @@
-// This runs per package
-// just get the name, find a version using conventional commits, update package json, release.
-// should be built.
-import path from "node:path"
 import { Config } from "release-it"
 
 console.info("`release-it` config read from the root")
@@ -13,11 +9,6 @@ const version = "${version}"
 const full = `${packageName}@${version}`
 
 console.log("Working on releasing package %s", packageName)
-
-// todo: command to find root
-const root = path.dirname(path.dirname(process.cwd()))
-// packages/<name>
-const commitsPath = path.relative(root, process.cwd())
 
 export default {
   git: {
@@ -35,8 +26,6 @@ export default {
   npm: {
     publish: true,
     allowSameVersion: true,
-    // publishArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
-    // versionArgs: ["--userconfig", path.resolve(root, "./.npmrc.ci")],
   },
   plugins: {
     "@release-it/conventional-changelog": {
