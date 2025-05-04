@@ -16,11 +16,9 @@
 }
 
 .attribute-name {
-  composes: attribute-input;
   border-radius: 0.25rem 0.125rem 0.125rem 0.25rem;
 }
 
 .attribute-value {
-  composes: attribute-input;
   border-radius: 0.125rem 0.25rem 0.25rem 0.125rem;
 }

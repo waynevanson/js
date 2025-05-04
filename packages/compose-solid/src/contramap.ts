@@ -1,10 +1,10 @@
-import { createMemo, createComponent } from "solid-js"
 import type {
+  ComposedPolymorphicComponent,
+  ComposedPolymorphicProps,
   OuterPropsKind,
   TagKind,
-  ComposedPolymorphicProps,
-  ComposedPolymorphicComponent,
 } from "./types.js"
+import { createComponent, createMemo } from "solid-js"
 
 /**
  * @summary
@@ -35,6 +35,7 @@ export function contramap<
     next: ComposedPolymorphicProps<As, NextOuterProps>,
   ) => ComposedPolymorphicProps<Tag, PrevOuterProps>,
 ): ComposedPolymorphicComponent<As, NextOuterProps> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function PolymorphicContramapComponent(next: any) {
     const props = createMemo(() => fn(next))
     return createComponent(component as never, props())

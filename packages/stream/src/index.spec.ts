@@ -1,6 +1,6 @@
-import { StringReplaceTranformStream } from "./index.js"
 import { describe, expect } from "vitest"
-import { test, fc } from "@fast-check/vitest"
+import { fc, test } from "@fast-check/vitest"
+import { StringReplaceTranformStream } from "./index.js"
 
 function createInputStream(chunks: Array<string>) {
   return new ReadableStream<string>({

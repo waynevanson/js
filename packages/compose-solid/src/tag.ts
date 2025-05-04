@@ -1,6 +1,6 @@
-import { splitProps } from "solid-js"
+import type { ComposedPolymorphicComponent, TagKind } from "./types.js"
 import { createDynamic } from "solid-js/web"
-import type { TagKind, ComposedPolymorphicComponent } from "./types.js"
+import { splitProps } from "solid-js"
 
 /**
  * @summary
@@ -24,7 +24,8 @@ import type { TagKind, ComposedPolymorphicComponent } from "./types.js"
  */
 export function tag<Tag extends TagKind>(
   tag: Tag,
-): ComposedPolymorphicComponent<Tag, {}> {
+): ComposedPolymorphicComponent<Tag, object> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function PolymorphicTagComponent(props: any) {
     const [, rest] = splitProps(props, ["as"])
     return createDynamic(() => props.as || tag, rest)

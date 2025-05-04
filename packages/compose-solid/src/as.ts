@@ -1,10 +1,10 @@
-import { createComponent, mergeProps, splitProps } from "solid-js"
 import {
   ComposedPolymorphicComponent,
   ComposedPolymorphicProps,
   PropsKind,
   TagKind,
 } from "./types.js"
+import { createComponent, mergeProps, splitProps } from "solid-js"
 
 /**
  * @summary
@@ -36,7 +36,8 @@ export function as<
         return props.as || as
       },
     })
-    //@ts-ignore-error
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     return createComponent(component, next)
   }
 }

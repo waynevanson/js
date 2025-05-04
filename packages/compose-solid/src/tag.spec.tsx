@@ -7,7 +7,7 @@ describe("tag", () => {
   test("should create a component with the type sof that tag", () => {
     const Component = tag("a")
     expectTypeOf(Component).toEqualTypeOf<
-      ComposedPolymorphicComponent<"a", {}>
+      ComposedPolymorphicComponent<"a", object>
     >()
   })
 

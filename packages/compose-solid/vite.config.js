@@ -1,10 +1,10 @@
 //@ts-check
 /// <reference types="vitest/config" />
 
-import { defineConfig, mergeConfig } from "vite"
-import solid from "vite-plugin-solid"
-import { externals } from "@waynevanson/vite-plugin-externals"
+import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
+import { externals } from "@waynevanson/vite-plugin-externals"
+import solid from "vite-plugin-solid"
 
 export default defineConfig({
   build: {

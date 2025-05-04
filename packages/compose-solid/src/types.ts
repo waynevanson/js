@@ -36,6 +36,6 @@ export type Substitute<Left extends object, Right extends object> = FastOmit<
 > &
   Right
 
-export type FastOmit<T extends object, U extends keyof any> = {
+export type FastOmit<T extends object, U extends PropertyKey> = {
   [K in keyof T as K extends U ? never : K]: T[K]
 }

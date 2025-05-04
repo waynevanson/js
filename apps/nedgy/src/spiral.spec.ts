@@ -1,5 +1,5 @@
-import { spiral } from "./spiral"
 import { describe, expect, it } from "vitest"
+import { spiral } from "./spiral"
 
 describe(spiral, () => {
   it("should work", () => {

@@ -7,6 +7,8 @@ export class StringReplaceTranformStream extends TransformStream<
       throw new Error(`Expected the search to be non empty`)
     }
 
+    // todo: fix this
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let buffer = ""
 
     // todo: what happens if start character is in the middle of the search?
