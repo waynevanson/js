@@ -48,6 +48,7 @@ export default defineConfig([
     plugins: { markdown },
     language: "markdown/gfm",
     extends: ["markdown/recommended"],
+    ignores: ["**/CHANGELOG.md"],
   },
   {
     files: ["**/*.css"],
