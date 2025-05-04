@@ -25,7 +25,7 @@ export function partial<
   partials: Partials,
 ): ComposedPolymorphicComponent<As, OuterPropsNext> {
   return function ComposedPartialComponent(props: any) {
-    const next = mergeProps(props, partials)
+    const next = mergeProps(partials, props)
     return createComponent(Component, next as any)
   }
 }
