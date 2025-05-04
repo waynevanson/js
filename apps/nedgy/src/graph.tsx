@@ -99,16 +99,6 @@ export function Graph(props: GraphProps) {
   )
 }
 
-type Coordinate = Record<"x" | "y", number>
-
-function createStep(ratio: Coordinate): Coordinate {
-  if (ratio.x < ratio.y) {
-    return { x: 1, y: ratio.x / ratio.y }
-  } else {
-    return { x: ratio.y / ratio.x, y: 1 }
-  }
-}
-
 function fit(length: number, gap: number): number {
   return length - (length % gap)
 }
