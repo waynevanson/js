@@ -1,5 +1,10 @@
 import { createComponent, createMemo, mergeProps, splitProps } from "solid-js"
-import { ComposedPolymorphicComponent, PropsKind, TagKind } from "./types.js"
+import {
+  ComposedPolymorphicComponent,
+  ComposedPolymorphicProps,
+  PropsKind,
+  TagKind,
+} from "./types.js"
 
 export function as<
   Tag extends TagKind,
@@ -9,7 +14,9 @@ export function as<
   component: ComposedPolymorphicComponent<Tag, OuterProps>,
   as: As,
 ): ComposedPolymorphicComponent<As, OuterProps> {
-  return function ComposedAsComponent(props: any) {
+  return function ComposedAsComponent(
+    props: ComposedPolymorphicProps<As, OuterProps>,
+  ) {
     const [, rest] = splitProps(props, ["as"])
     const tag = createMemo(() => props.as || as)
     const next = mergeProps(rest, () => ({ as: tag() }))
