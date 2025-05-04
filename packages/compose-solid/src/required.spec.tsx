@@ -9,12 +9,12 @@ describe("required", () => {
     const First = tag("a")
     const Second = required(First, ["href"])
 
-    expectTypeOf(Second).toEqualTypeOf<
-      ComposedPolymorphicComponent<"a", { href: string }>
-    >()
+    let result
 
     //@ts-expect-error
-    const result = render(() => <Second />)
+    result = render(() => <Second />)
+
+    result = render(() => <Second href="" />)
   })
 
   test.todo("should turn a required prop into a required prop")
