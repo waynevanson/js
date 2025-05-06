@@ -1,3 +1,5 @@
 export * from "./contramap.js"
 export * from "./tag.js"
 export * from "./types.js"
+export * from "./required.js"
+export * from "./partial.js"
