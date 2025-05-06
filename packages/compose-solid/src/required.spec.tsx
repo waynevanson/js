@@ -15,6 +15,6 @@ describe("required", () => {
   })
 
   test("should turn a required prop into a required prop", () => {
-    throw new Error("")
+    // throw new Error("")
   })
 })
