@@ -1,6 +1,7 @@
 import {
   ComposedMonomorphicProps,
   ComposedPolymorphicComponent,
+  Compute,
   OuterPropsKind,
   Substitute,
   TagKind,
@@ -23,7 +24,9 @@ export function required<
   _requireds: Array<RequiredProperties>,
 ): ComposedPolymorphicComponent<
   Tag,
-  Substitute<OuterPropsPrev, Required<Pick<PropsPrev, RequiredProperties>>>
+  Compute<
+    Substitute<OuterPropsPrev, Required<Pick<PropsPrev, RequiredProperties>>>
+  >
 > {
   // only changes are to the types
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

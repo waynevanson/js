@@ -21,4 +21,11 @@ describe("required", () => {
     //@ts-expect-error assertion
     render(() => <Case href={undefined} />)
   })
+
+  test("should revert ", () => {
+    const Second = required(tag("a"), ["href"])
+  })
+
+  // tag,required,partial,required
+  test.todo("should revert applying a partial")
 })

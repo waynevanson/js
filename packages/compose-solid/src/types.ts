@@ -59,4 +59,4 @@ export type RequiredWithUndefined<T, U extends Required<T> = Required<T>> = {
   [P in Exclude<keyof T, undefined>]: U[P] | undefined
 }
 
-export type EmptyObject = Record<never, never>
+export type Compute<T> = { [K in keyof T]: T[K] } & {}
