@@ -14,14 +14,11 @@ describe("required", () => {
     render(() => <Second href="" />)
   })
 
-  test("should allow a required prop to have the value undefined", () => {
+  test("should not allow a required prop to be undefined", () => {
     const A = tag("a")
     const Case = required(A, ["href"])
 
+    //@ts-expect-error assertion
     render(() => <Case href={undefined} />)
-  })
-
-  test("should turn a required prop into a required prop", () => {
-    // throw new Error("")
   })
 })

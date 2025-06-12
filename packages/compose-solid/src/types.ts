@@ -58,3 +58,5 @@ export type FastOmit<T extends object, U extends PropertyKey> = {
 export type RequiredWithUndefined<T, U extends Required<T> = Required<T>> = {
   [P in Exclude<keyof T, undefined>]: U[P] | undefined
 }
+
+export type EmptyObject = Record<never, never>

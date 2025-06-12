@@ -9,7 +9,7 @@ import { createComponent, mergeProps } from "solid-js"
 
 /**
  * @summary
- * Apply defaults to an existing component.
+ * Apply default values to existing properties.
  */
 export function partial<
   Tag extends TagKind,

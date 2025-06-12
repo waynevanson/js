@@ -1,4 +1,9 @@
-import { ComposedPolymorphicComponent, tag, TagKind } from "./index.jsx"
+import {
+  ComposedPolymorphicComponent,
+  EmptyObject,
+  tag,
+  TagKind,
+} from "./index.jsx"
 import { describe, test, expect, expectTypeOf } from "vitest"
 import { DOMElements } from "solid-js/web"
 import { render } from "@solidjs/testing-library"
@@ -7,7 +12,7 @@ describe("tag", () => {
   test("should create a component with the type sof that tag", () => {
     const Component = tag("a")
     expectTypeOf(Component).toEqualTypeOf<
-      ComposedPolymorphicComponent<"a", object>
+      ComposedPolymorphicComponent<"a", EmptyObject>
     >()
   })
 
