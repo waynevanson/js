@@ -50,3 +50,11 @@ export type Substitute<Left extends object, Right extends object> = FastOmit<
 export type FastOmit<T extends object, U extends PropertyKey> = {
   [K in keyof T as K extends U ? never : K]: T[K]
 }
+
+/**
+ * @summary
+ * Transforms partial keys to be required, with values can be undefined.
+ */
+export type RequiredWithUndefined<T, U extends Required<T> = Required<T>> = {
+  [P in Exclude<keyof T, undefined>]: U[P] | undefined
+}

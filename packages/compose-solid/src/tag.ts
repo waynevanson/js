@@ -24,7 +24,7 @@ import { splitProps } from "solid-js"
  */
 export function tag<Tag extends TagKind>(
   tag: Tag,
-): ComposedPolymorphicComponent<Tag, object> {
+): ComposedPolymorphicComponent<Tag, Record<never, never>> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function PolymorphicTagComponent(props: any) {
     const [, rest] = splitProps(props, ["as"])
